@@ -14,5 +14,9 @@ export interface ReportResponse {
   overallStatus: OverallStatus;
   passCount: number;
   failCount: number;
+  warningCount: number;
+  /** All results, including passes (for full report display) */
+  items: ReportItem[];
+  /** Backwards-compat: non-pass items only */
   issues: ReportItem[];
 }

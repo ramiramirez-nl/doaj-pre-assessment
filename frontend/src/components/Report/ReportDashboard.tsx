@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { ReportResponse } from '../../types/form.types';
+import type { ReportResponse, ReportItem } from '../../types/form.types';
 import { SummaryBanner } from './SummaryBanner';
 import { IssueCard } from './IssueCard';
 
@@ -11,22 +11,21 @@ interface Props {
 }
 
 function buildPlainText(report: ReportResponse, lang: string): string {
+  const all = report.items ?? report.issues;
   const lines = [
     'DOAJ Pre-Assessment Report',
     `Generated: ${new Date().toLocaleString(lang)}`,
     '',
     `Overall Status: ${report.overallStatus.toUpperCase()}`,
-    `Passed: ${report.passCount}  |  Issues: ${report.failCount}`,
+    `Passed: ${report.passCount}  |  Warnings: ${report.warningCount ?? 0}  |  Failures: ${report.failCount}`,
     '',
-    '--- Issues ---',
-    ...report.issues
-      .filter((i) => i.status !== 'pass')
-      .map(
-        (i) =>
-          `[${i.status.toUpperCase()}] ${i.section} / ${i.field}\n  ${i.message}${
-            i.suggestion ? '\n  Suggestion: ' + i.suggestion : ''
-          }${i.url ? '\n  URL: ' + i.url : ''}`,
-      ),
+    '--- All Checks ---',
+    ...all.map(
+      (i) =>
+        `[${i.status.toUpperCase()}] ${i.section} / ${i.field}\n  ${i.message}${
+          i.suggestion ? '\n  Suggestion: ' + i.suggestion : ''
+        }${i.url ? '\n  URL: ' + i.url : ''}`,
+    ),
     '',
     '--- Disclaimer ---',
     'This report was generated using AI-assisted tools and may contain inaccuracies.',
@@ -36,10 +35,30 @@ function buildPlainText(report: ReportResponse, lang: string): string {
   return lines.join('\n');
 }
 
+function PassCard({ item }: { item: ReportItem }) {
+  return (
+    <div className="rounded-md bg-green-50 p-3 ring-1 ring-green-200">
+      <div className="flex items-start gap-2">
+        <span className="mt-0.5 text-green-600">✓</span>
+        <div className="flex-1 text-sm">
+          <div className="font-medium text-green-900">
+            {item.section} / {item.field}
+          </div>
+          <div className="text-green-800">{item.message}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ReportDashboard({ report, onReset, onBack }: Props) {
   const { t, i18n } = useTranslation();
   const [copied, setCopied] = useState(false);
-  const issues = report.issues.filter((i) => i.status !== 'pass');
+  const [showPasses, setShowPasses] = useState(false);
+
+  const all = report.items ?? report.issues;
+  const issues = all.filter((i) => i.status !== 'pass');
+  const passes = all.filter((i) => i.status === 'pass');
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(buildPlainText(report, i18n.language));
@@ -67,6 +86,28 @@ export function ReportDashboard({ report, onReset, onBack }: Props) {
           {issues.map((item, idx) => (
             <IssueCard key={`${item.section}-${item.field}-${idx}`} item={item} />
           ))}
+        </div>
+      )}
+
+      {passes.length > 0 && (
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={() => setShowPasses((v) => !v)}
+            className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 print:hidden"
+          >
+            <span>{showPasses ? '▼' : '▶'}</span>
+            <span>
+              {showPasses ? 'Hide' : 'Show'} {passes.length} passed checks
+            </span>
+          </button>
+          {(showPasses || typeof window !== 'undefined') && (
+            <div className={`space-y-2 ${showPasses ? '' : 'hidden print:block'}`}>
+              {passes.map((item, idx) => (
+                <PassCard key={`pass-${item.section}-${item.field}-${idx}`} item={item} />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
