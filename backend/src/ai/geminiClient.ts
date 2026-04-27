@@ -56,10 +56,12 @@ Respond ONLY with valid JSON in this exact format:
     return JSON.parse(jsonMatch[0]) as AnalysisResult;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
+    const apiKey = process.env.GEMINI_API_KEY ?? '';
+    const keyHint = apiKey ? `key set (len=${apiKey.length})` : 'GEMINI_API_KEY missing';
     return {
       found: false,
       confidence: 'low',
-      evidence: 'AI service unavailable',
+      evidence: `AI service error: ${message.slice(0, 300)} [${keyHint}]`,
       issues: [`AI check skipped: ${message.slice(0, 200)}`],
     };
   }

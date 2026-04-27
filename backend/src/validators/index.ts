@@ -48,6 +48,8 @@ export async function runAllValidations(
     overallStatus,
     passCount,
     failCount,
+    warningCount,
+    items: allResults,
     issues,
   };
 }
