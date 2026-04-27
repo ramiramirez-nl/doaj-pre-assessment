@@ -23,12 +23,14 @@ async function checkUrl(
   }
   const scraped = await scrapeUrl(url);
   if (!scraped.accessible) {
+    // URL was provided but we couldn't reach it — could be geo-blocking
     results.push({
       section,
       field,
-      status: 'fail',
-      message: `URL ${url} is not accessible.`,
-      suggestion: 'Ensure the page is publicly accessible without login.',
+      status: 'warning',
+      message: `Could not access ${url} from our servers (may be geo-restricted).`,
+      suggestion:
+        'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
       url,
     });
     return results;

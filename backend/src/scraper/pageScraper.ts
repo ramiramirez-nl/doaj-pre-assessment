@@ -17,7 +17,8 @@ export async function scrapeUrl(url: string): Promise<ScrapeResult> {
     });
     const page = await browser.newPage();
     await page.setUserAgent(
-      'Mozilla/5.0 (compatible; DOAJ-PreAssessment-Bot/1.0)'
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 ' +
+        '(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
     );
     const response = await page.goto(url, {
       waitUntil: 'domcontentloaded',
