@@ -20,13 +20,13 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
     results.push({
       section: 'About',
       field: 'homepageUrl',
-      status: scraped.accessible ? 'pass' : 'fail',
+      status: scraped.accessible ? 'pass' : 'warning',
       message: scraped.accessible
         ? 'Journal homepage is accessible.'
-        : `Homepage URL ${data.homepageUrl} is not accessible.`,
+        : `Could not access homepage ${data.homepageUrl} from our servers (may be geo-restricted).`,
       suggestion: scraped.accessible
         ? ''
-        : 'The journal must have a dedicated URL accessible from any location without login.',
+        : 'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
       url: data.homepageUrl,
     });
   }

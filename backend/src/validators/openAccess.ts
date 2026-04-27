@@ -47,10 +47,10 @@ export async function validateOpenAccess(
     results.push({
       section: 'Open Access',
       field: 'openAccessStatementUrl',
-      status: 'fail',
-      message: `The URL ${data.openAccessStatementUrl} is not accessible.`,
+      status: 'warning',
+      message: `Could not access ${data.openAccessStatementUrl} from our servers (may be geo-restricted).`,
       suggestion:
-        'Ensure the URL is publicly accessible without login and returns HTTP 200.',
+        'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
       url: data.openAccessStatementUrl,
     });
     return results;
