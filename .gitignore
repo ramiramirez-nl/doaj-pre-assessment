@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+*.log
+.npm-cache/
+*.tsbuildinfo
+.claude/
+docs/superpowers/
+
+# Research source artifacts (kept locally, not versioned)
+*.jpg
+*.docx
+*.xlsx
+notes.md
+task_plan.md
+rules.txt

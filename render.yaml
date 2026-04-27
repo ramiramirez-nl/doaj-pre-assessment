@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: doaj-pre-assessment
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.1
+      - key: GEMINI_API_KEY
+        sync: false
+    healthCheckPath: /health
