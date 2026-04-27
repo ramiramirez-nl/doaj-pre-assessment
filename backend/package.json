@@ -19,8 +19,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "helmet": "^8.1.0",
-    "puppeteer": "^24.42.0"
+    "helmet": "^8.1.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
