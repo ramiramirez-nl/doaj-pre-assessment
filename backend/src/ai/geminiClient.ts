@@ -1,6 +1,22 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import axios from 'axios';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY ?? '');
+/**
+ * AI client. OpenAI-compatible REST API.
+ * Defaults to freemodel.dev free models, but works with any OpenAI-compatible
+ * endpoint (set OPENAI_BASE_URL + OPENAI_API_KEY).
+ *
+ * Env vars:
+ *  - OPENAI_API_KEY   (required)
+ *  - OPENAI_BASE_URL  (default https://api.freemodel.dev/v1)
+ *  - AI_MODEL         (default gpt-5.4-mini)
+ *
+ * Legacy fallback: GEMINI_API_KEY still read so existing deployments keep working
+ * (treated as OPENAI_API_KEY if OPENAI_API_KEY missing).
+ */
+
+const BASE_URL = process.env.OPENAI_BASE_URL ?? 'https://api.freemodel.dev/v1';
+const MODEL = process.env.AI_MODEL ?? 'gpt-5.4-mini';
+const API_KEY = process.env.OPENAI_API_KEY ?? process.env.GEMINI_API_KEY ?? '';
 
 export interface AnalysisInput {
   pageText: string;
@@ -18,10 +34,6 @@ export interface AnalysisResult {
 export async function analyzePageContent(
   input: AnalysisInput
 ): Promise<AnalysisResult> {
-  const model = genAI.getGenerativeModel({
-    model: process.env.GEMINI_MODEL ?? 'gemini-2.0-flash',
-  });
-
   const prompt = `You are a DOAJ (Directory of Open Access Journals) compliance checker.
 
 Analyze the following webpage content and check if it meets this criterion:
@@ -31,7 +43,7 @@ URL: ${input.url}
 PAGE CONTENT (first 3000 chars):
 ${input.pageText.slice(0, 3000)}
 
-Respond ONLY with valid JSON in this exact format:
+Respond ONLY with valid JSON in this exact format, no markdown fences:
 {
   "found": true/false,
   "confidence": "high"/"medium"/"low",
@@ -40,28 +52,43 @@ Respond ONLY with valid JSON in this exact format:
 }`;
 
   try {
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
+    const response = await axios.post(
+      `${BASE_URL}/chat/completions`,
+      {
+        model: MODEL,
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.2,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${API_KEY}`,
+        },
+        timeout: 30000,
+      }
+    );
 
-    // Extract JSON from response (Gemini may wrap in markdown)
+    const text: string =
+      response.data?.choices?.[0]?.message?.content ?? '';
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       return {
         found: false,
         confidence: 'low',
-        evidence: 'Could not parse AI response',
+        evidence: `Could not parse AI response: ${text.slice(0, 200)}`,
         issues: ['AI analysis failed'],
       };
     }
     return JSON.parse(jsonMatch[0]) as AnalysisResult;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    const apiKey = process.env.GEMINI_API_KEY ?? '';
-    const keyHint = apiKey ? `key set (len=${apiKey.length})` : 'GEMINI_API_KEY missing';
+    const keyHint = API_KEY
+      ? `key set (len=${API_KEY.length})`
+      : 'OPENAI_API_KEY missing';
     return {
       found: false,
       confidence: 'low',
-      evidence: `AI service error: ${message.slice(0, 300)} [${keyHint}]`,
+      evidence: `AI service error: ${message.slice(0, 300)} [${keyHint}, model=${MODEL}]`,
       issues: [`AI check skipped: ${message.slice(0, 200)}`],
     };
   }
