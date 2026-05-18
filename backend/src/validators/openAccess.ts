@@ -29,7 +29,27 @@ export async function validateOpenAccess(
     suggestion: '',
   });
 
-  // Check 2: OA statement URL must be accessible
+  // Check 2: No embargo
+  if (!data.hasNoEmbargo) {
+    results.push({
+      section: 'Open Access',
+      field: 'hasNoEmbargo',
+      status: 'fail',
+      message: 'Journal has an embargo period.',
+      suggestion:
+        'DOAJ requires immediate open access — articles must be freely available the moment they are published, with no embargo delay (e.g. 6 or 12 months). Remove any embargo and update your OA policy.',
+    });
+  } else {
+    results.push({
+      section: 'Open Access',
+      field: 'hasNoEmbargo',
+      status: 'pass',
+      message: 'No embargo — articles are immediately open access.',
+      suggestion: '',
+    });
+  }
+
+  // Check 3: OA statement URL must be accessible
   if (!data.openAccessStatementUrl) {
     results.push({
       section: 'Open Access',

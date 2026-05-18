@@ -5,6 +5,7 @@ export interface ApcFee {
 
 export interface OpenAccessData {
   adheresToDefinition: boolean;
+  hasNoEmbargo: boolean;
   openAccessStatementUrl: string;
   licenseStartDate: string;
 }
@@ -22,6 +23,9 @@ export interface CopyrightData {
   embedsLicenseInArticles: boolean;
   authorsRetainCopyright: boolean;
   copyrightTermsUrl: string;
+  licenseConsistentOnArticlePages: boolean;
+  licenseConsistentInPdfs: boolean;
+  noCopyrightConflicts: boolean;
 }
 
 export interface EditorialData {
@@ -33,6 +37,14 @@ export interface EditorialData {
   editorialBoardUrl: string;
   instructionsForAuthorsUrl: string;
   avgWeeksSubmissionToPublication: number;
+  endogenyCompliant: boolean;
+}
+
+export interface EthicsData {
+  publicationEthicsUrl: string;
+  hasRetractionsPolicy: boolean;
+  hasConflictPolicy: boolean;
+  noMisleadingMetrics: boolean;
 }
 
 export interface BusinessModelData {
@@ -54,6 +66,7 @@ export interface FormData {
   about: AboutData;
   copyright: CopyrightData;
   editorial: EditorialData;
+  ethics: EthicsData;
   businessModel: BusinessModelData;
   bestPractice: BestPracticeData;
 }

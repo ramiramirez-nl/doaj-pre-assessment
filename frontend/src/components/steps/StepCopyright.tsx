@@ -51,6 +51,23 @@ export function StepCopyright() {
         <span>{t('step.copyright.authorsRetain')}</span>
       </label>
       <LinkField label={t('step.copyright.copyrightTermsUrl')} {...register('copyright.copyrightTermsUrl')} />
+
+      <div className="rounded-md border border-amber-200 bg-amber-50 p-3 space-y-2">
+        <p className="text-xs font-semibold text-amber-800 uppercase tracking-wide">{t('step.copyright.consistencyTitle')}</p>
+        <p className="text-xs text-amber-700">{t('step.copyright.consistencyHint')}</p>
+        <label className="flex items-start gap-2 text-sm text-gray-700">
+          <input type="checkbox" className="mt-0.5" {...register('copyright.licenseConsistentOnArticlePages')} />
+          <span>{t('step.copyright.licenseConsistentOnArticlePages')}</span>
+        </label>
+        <label className="flex items-start gap-2 text-sm text-gray-700">
+          <input type="checkbox" className="mt-0.5" {...register('copyright.licenseConsistentInPdfs')} />
+          <span>{t('step.copyright.licenseConsistentInPdfs')}</span>
+        </label>
+        <label className="flex items-start gap-2 text-sm text-gray-700">
+          <input type="checkbox" className="mt-0.5" {...register('copyright.noCopyrightConflicts')} />
+          <span>{t('step.copyright.noCopyrightConflicts')}</span>
+        </label>
+      </div>
     </section>
   );
 }

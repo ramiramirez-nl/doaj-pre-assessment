@@ -164,5 +164,65 @@ export async function validateCopyright(
     }
   }
 
+  // Check 6: License consistent on article pages
+  if (data.licenseConsistentOnArticlePages === false) {
+    results.push({
+      section: 'Copyright',
+      field: 'licenseConsistentOnArticlePages',
+      status: 'fail',
+      message: 'License on individual article pages does not match the site-wide license policy.',
+      suggestion:
+        'DOAJ requires the same license to appear consistently on the general policy page and on each article\'s landing page. Fix the mismatch before applying.',
+    });
+  } else if (data.licenseConsistentOnArticlePages === true) {
+    results.push({
+      section: 'Copyright',
+      field: 'licenseConsistentOnArticlePages',
+      status: 'pass',
+      message: 'License on article pages is consistent with site-wide policy.',
+      suggestion: '',
+    });
+  }
+
+  // Check 7: License consistent in PDFs
+  if (data.licenseConsistentInPdfs === false) {
+    results.push({
+      section: 'Copyright',
+      field: 'licenseConsistentInPdfs',
+      status: 'fail',
+      message: 'License text in article PDFs does not match the website license policy.',
+      suggestion:
+        'Any license text in PDFs must match the license declared on the website. Common mismatch: PDFs say "All rights reserved" but the policy page says "CC BY". Update PDF templates or the policy page.',
+    });
+  } else if (data.licenseConsistentInPdfs === true) {
+    results.push({
+      section: 'Copyright',
+      field: 'licenseConsistentInPdfs',
+      status: 'pass',
+      message: 'License in PDFs is consistent with site-wide policy.',
+      suggestion: '',
+    });
+  }
+
+  // Check 8: No copyright conflicts across all locations
+  if (data.noCopyrightConflicts === false) {
+    results.push({
+      section: 'Copyright',
+      field: 'noCopyrightConflicts',
+      status: 'fail',
+      message: 'Copyright information conflicts across different parts of the journal website.',
+      suggestion:
+        'DOAJ reviewers check the general policy page, individual article pages, and PDF files for consistency. Conflicting signals (e.g. open license + "All rights reserved") will result in rejection. Resolve all contradictions.',
+    });
+  } else if (data.noCopyrightConflicts === true) {
+    results.push({
+      section: 'Copyright',
+      field: 'noCopyrightConflicts',
+      status: 'pass',
+      message: 'No copyright conflicts found across website, article pages, and PDFs.',
+      suggestion: '',
+    });
+  }
+
   return results;
 }

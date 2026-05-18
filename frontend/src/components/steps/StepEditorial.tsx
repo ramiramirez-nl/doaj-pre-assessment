@@ -69,6 +69,11 @@ export function StepEditorial() {
           {...register('editorial.avgWeeksSubmissionToPublication', { valueAsNumber: true })}
         />
       </div>
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('editorial.endogenyCompliant')} />
+        <span>{t('step.editorial.endogenyCompliant')}</span>
+      </label>
+      <p className="text-xs text-gray-500">{t('step.editorial.endogenyHint')}</p>
     </section>
   );
 }

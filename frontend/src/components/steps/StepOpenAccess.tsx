@@ -39,6 +39,10 @@ export function StepOpenAccess() {
         <input type="checkbox" className="mt-0.5" {...register('openAccess.adheresToDefinition')} />
         <span>{t('step.openAccess.adheresToDefinition')}</span>
       </label>
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('openAccess.hasNoEmbargo')} />
+        <span>{t('step.openAccess.hasNoEmbargo')}</span>
+      </label>
       <LinkField
         label={t('step.openAccess.statementUrl')}
         hint={t('step.openAccess.statementHint')}

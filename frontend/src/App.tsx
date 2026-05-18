@@ -11,6 +11,7 @@ import { StepAbout } from './components/steps/StepAbout';
 import { StepCopyright } from './components/steps/StepCopyright';
 import { StepEditorial } from './components/steps/StepEditorial';
 import { StepBusinessModel } from './components/steps/StepBusinessModel';
+import { StepEthics } from './components/steps/StepEthics';
 import { StepBestPractice } from './components/steps/StepBestPractice';
 import { StepReview } from './components/steps/StepReview';
 import { ReportDashboard } from './components/Report/ReportDashboard';
@@ -20,13 +21,14 @@ const STEP_KEYS = [
   'steps.about',
   'steps.copyright',
   'steps.editorial',
+  'steps.ethics',
   'steps.businessModel',
   'steps.bestPractice',
   'steps.review',
 ] as const;
 
 const DEFAULT_VALUES: FormData = {
-  openAccess: { adheresToDefinition: false, openAccessStatementUrl: '', licenseStartDate: '' },
+  openAccess: { adheresToDefinition: false, hasNoEmbargo: false, openAccessStatementUrl: '', licenseStartDate: '' },
   about: {
     journalTitle: '',
     homepageUrl: '',
@@ -39,6 +41,9 @@ const DEFAULT_VALUES: FormData = {
     embedsLicenseInArticles: false,
     authorsRetainCopyright: false,
     copyrightTermsUrl: '',
+    licenseConsistentOnArticlePages: false,
+    licenseConsistentInPdfs: false,
+    noCopyrightConflicts: false,
   },
   editorial: {
     peerReviewTypes: [],
@@ -49,6 +54,13 @@ const DEFAULT_VALUES: FormData = {
     editorialBoardUrl: '',
     instructionsForAuthorsUrl: '',
     avgWeeksSubmissionToPublication: 0,
+    endogenyCompliant: false,
+  },
+  ethics: {
+    publicationEthicsUrl: '',
+    hasRetractionsPolicy: false,
+    hasConflictPolicy: false,
+    noMisleadingMetrics: false,
   },
   businessModel: {
     chargesApc: false,
@@ -106,9 +118,10 @@ function App() {
       case 1: return <StepAbout />;
       case 2: return <StepCopyright />;
       case 3: return <StepEditorial />;
-      case 4: return <StepBusinessModel />;
-      case 5: return <StepBestPractice />;
-      case 6: return <StepReview />;
+      case 4: return <StepEthics />;
+      case 5: return <StepBusinessModel />;
+      case 6: return <StepBestPractice />;
+      case 7: return <StepReview />;
       default: return null;
     }
   };

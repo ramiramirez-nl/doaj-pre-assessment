@@ -4,6 +4,7 @@ import { validateOpenAccess } from './openAccess';
 import { validateAbout } from './about';
 import { validateEditorial } from './editorial';
 import { validateCopyright } from './copyright';
+import { validateEthics } from './ethics';
 import { validateBusinessModel } from './businessModel';
 
 export async function runAllValidations(
@@ -14,12 +15,14 @@ export async function runAllValidations(
     aboutResults,
     editorialResults,
     copyrightResults,
+    ethicsResults,
     businessResults,
   ] = await Promise.all([
     validateOpenAccess(formData.openAccess),
     validateAbout(formData.about),
     validateEditorial(formData.editorial),
     validateCopyright(formData.copyright),
+    validateEthics(formData.ethics),
     validateBusinessModel(formData.businessModel),
   ]);
 
@@ -28,6 +31,7 @@ export async function runAllValidations(
     ...aboutResults,
     ...editorialResults,
     ...copyrightResults,
+    ...ethicsResults,
     ...businessResults,
   ];
 

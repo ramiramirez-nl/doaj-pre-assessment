@@ -24,6 +24,7 @@ export function StepReview() {
         <h3 className="mb-2 font-semibold">{t('step.review.openAccess')}</h3>
         <dl>
           <Row label={t('step.review.adheresToDefinition')} value={String(data.openAccess?.adheresToDefinition)} />
+          <Row label={t('step.review.hasNoEmbargo')} value={String(data.openAccess?.hasNoEmbargo)} />
           <Row label={t('step.review.oaStatementUrl')} value={data.openAccess?.openAccessStatementUrl} />
           <Row label={t('step.review.licenseStartDate')} value={data.openAccess?.licenseStartDate} />
         </dl>
@@ -38,12 +39,23 @@ export function StepReview() {
         <dl>
           <Row label={t('step.review.licenses')} value={data.copyright?.licenses?.join(', ')} />
           <Row label={t('step.review.licenseInfoUrl')} value={data.copyright?.licenseInfoUrl} />
+          <Row label={t('step.review.licenseConsistentOnArticlePages')} value={String(data.copyright?.licenseConsistentOnArticlePages)} />
+          <Row label={t('step.review.licenseConsistentInPdfs')} value={String(data.copyright?.licenseConsistentInPdfs)} />
+          <Row label={t('step.review.noCopyrightConflicts')} value={String(data.copyright?.noCopyrightConflicts)} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.editorial')}</h3>
         <dl>
           <Row label={t('step.review.peerReviewTypes')} value={data.editorial?.peerReviewTypes?.join(', ')} />
           <Row label={t('step.review.editorialBoardUrl')} value={data.editorial?.editorialBoardUrl} />
           <Row label={t('step.review.aimsAndScopeUrl')} value={data.editorial?.aimsAndScopeUrl} />
+          <Row label={t('step.review.endogenyCompliant')} value={String(data.editorial?.endogenyCompliant)} />
+        </dl>
+        <h3 className="mb-2 mt-4 font-semibold">{t('step.review.ethics')}</h3>
+        <dl>
+          <Row label={t('step.review.publicationEthicsUrl')} value={data.ethics?.publicationEthicsUrl} />
+          <Row label={t('step.review.hasRetractionsPolicy')} value={String(data.ethics?.hasRetractionsPolicy)} />
+          <Row label={t('step.review.hasConflictPolicy')} value={String(data.ethics?.hasConflictPolicy)} />
+          <Row label={t('step.review.noMisleadingMetrics')} value={String(data.ethics?.noMisleadingMetrics)} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.businessModel')}</h3>
         <dl>

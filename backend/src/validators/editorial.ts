@@ -118,5 +118,25 @@ export async function validateEditorial(
   );
   results.push(...instructionsResults);
 
+  // Check 6: Endogeny ≤ 25%
+  if (data.endogenyCompliant === false) {
+    results.push({
+      section: 'Editorial',
+      field: 'endogenyCompliant',
+      status: 'fail',
+      message: 'In-house authorship exceeds the 25% DOAJ threshold.',
+      suggestion:
+        'DOAJ requires that no more than 25% of published research articles have an author who is also an editor, editorial board member, or reviewer. Reduce in-house publishing or diversify the editorial board.',
+    });
+  } else {
+    results.push({
+      section: 'Editorial',
+      field: 'endogenyCompliant',
+      status: 'pass',
+      message: 'In-house authorship is within the 25% DOAJ limit.',
+      suggestion: '',
+    });
+  }
+
   return results;
 }
