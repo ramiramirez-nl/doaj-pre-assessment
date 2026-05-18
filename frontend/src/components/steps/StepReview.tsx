@@ -33,7 +33,6 @@ export function StepReview() {
           <Row label={t('step.review.homepage')} value={data.about?.homepageUrl} />
           <Row label={t('step.review.issnOnline')} value={data.about?.issnOnline} />
           <Row label={t('step.review.issnPrint')} value={data.about?.issnPrint} />
-          <Row label={t('step.review.publisher')} value={data.about?.publisherName} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.copyright')}</h3>
         <dl>

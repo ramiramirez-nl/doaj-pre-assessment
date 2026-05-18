@@ -29,14 +29,9 @@ const DEFAULT_VALUES: FormData = {
   openAccess: { adheresToDefinition: false, openAccessStatementUrl: '', licenseStartDate: '' },
   about: {
     journalTitle: '',
-    alternativeTitle: '',
     homepageUrl: '',
     issnPrint: '',
     issnOnline: '',
-    keywords: [],
-    languages: [],
-    publisherName: '',
-    publisherCountry: '',
   },
   copyright: {
     licenses: [],

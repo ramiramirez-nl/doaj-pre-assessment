@@ -11,14 +11,9 @@ export interface OpenAccessData {
 
 export interface AboutData {
   journalTitle: string;
-  alternativeTitle: string;
   homepageUrl: string;
   issnPrint: string;
   issnOnline: string;
-  keywords: string[];
-  languages: string[];
-  publisherName: string;
-  publisherCountry: string;
 }
 
 export interface CopyrightData {
