@@ -2,6 +2,8 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { LANGUAGES } from '../../data/languages';
+import { COUNTRIES } from '../../data/countries';
 
 const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
@@ -11,6 +13,13 @@ export function StepAbout() {
   const { t } = useTranslation();
   const keywords = watch('about.keywords') ?? [];
   const languages = watch('about.languages') ?? [];
+
+  const toggleLanguage = (lang: string) => {
+    const next = languages.includes(lang)
+      ? languages.filter((l) => l !== lang)
+      : [...languages, lang];
+    setValue('about.languages', next, { shouldDirty: true });
+  };
 
   return (
     <section className="space-y-4">
@@ -44,16 +53,30 @@ export function StepAbout() {
           }
         />
       </div>
+
       <div>
-        <label className="block text-sm font-medium text-gray-700">{t('step.about.languages')}</label>
-        <input
-          className={inputCls}
-          defaultValue={languages.join(', ')}
-          onChange={(e) =>
-            setValue('about.languages', e.target.value.split(',').map((s) => s.trim()).filter(Boolean))
-          }
-        />
+        <label className="block text-sm font-medium text-gray-700">
+          {t('step.about.languages')}
+        </label>
+        <p className="text-xs text-gray-500 mb-2">
+          {languages.length > 0
+            ? languages.join(', ')
+            : 'Select one or more from the list below.'}
+        </p>
+        <div className="max-h-48 overflow-y-auto rounded-md border border-gray-200 p-2 grid grid-cols-2 gap-x-4 gap-y-1">
+          {LANGUAGES.map((lang) => (
+            <label key={lang} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={languages.includes(lang)}
+                onChange={() => toggleLanguage(lang)}
+              />
+              <span>{lang}</span>
+            </label>
+          ))}
+        </div>
       </div>
+
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">{t('step.about.publisherName')}</label>
@@ -61,7 +84,14 @@ export function StepAbout() {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">{t('step.about.publisherCountry')}</label>
-          <input className={inputCls} {...register('about.publisherCountry')} />
+          <select className={inputCls} {...register('about.publisherCountry')}>
+            <option value="">— Select country —</option>
+            {COUNTRIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </section>

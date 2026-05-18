@@ -10,8 +10,11 @@ interface LinkFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export const LinkField = forwardRef<HTMLInputElement, LinkFieldProps>(
   function LinkField({ label, hint, error, value, ...rest }, ref) {
     const { t } = useTranslation();
-    const url = typeof value === 'string' ? value : '';
-    const canOpen = /^https?:\/\//i.test(url);
+    const url = typeof value === 'string' ? value.trim() : '';
+    // Allow open if it looks like a URL (has a dot, no spaces). Auto-prepend https:// if missing.
+    const looksLikeUrl = url.length > 3 && /\./.test(url) && !/\s/.test(url);
+    const canOpen = looksLikeUrl;
+    const fullUrl = /^https?:\/\//i.test(url) ? url : `https://${url}`;
     return (
       <div className="space-y-1">
         <label className="block text-sm font-medium text-gray-700">{label}</label>
@@ -27,7 +30,7 @@ export const LinkField = forwardRef<HTMLInputElement, LinkFieldProps>(
           <button
             type="button"
             disabled={!canOpen}
-            onClick={() => canOpen && window.open(url, '_blank', 'noopener')}
+            onClick={() => canOpen && window.open(fullUrl, '_blank', 'noopener')}
             className="shrink-0 rounded-md bg-gray-100 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200 disabled:opacity-40"
           >
             {t('linkField.openLink')}
