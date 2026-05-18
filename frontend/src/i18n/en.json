@@ -58,7 +58,7 @@
   "step.editorial.endogenyCompliant": "In-house authorship does not exceed 25% (editors/board members are not authors of more than 25% of published articles).",
   "step.editorial.endogenyHint": "DOAJ rule: count the last two issues (or last calendar year if continuous publishing). If any author of a research article is also an editor, board member, or reviewer, that article counts as in-house. Maximum 25%.",
 
-  "step.businessModel.title": "5. Business Model",
+  "step.businessModel.title": "6. Business Model",
   "step.businessModel.chargesApc": "The journal charges article processing charges (APCs).",
   "step.businessModel.apcFees": "APC fees",
   "step.businessModel.currency": "Currency",
@@ -80,7 +80,7 @@
   "step.ethics.misleadingMetricsExplain": "DOAJ prohibits displaying metrics from commercial registries not recognised by the academic community, such as: Global Impact Factor, SJIF (Scientific Journal Impact Factor), ResearchBib IF, Universal Impact Factor, CIF, i-Factor, or similar. These are not peer-reviewed metrics and mislead authors. Only display verifiable metrics from recognised services: Web of Science Journal Impact Factor (JIF), Scopus CiteScore, SCImago SJR, or SNIP.",
   "step.ethics.noMisleadingMetrics": "The journal does NOT display non-standard or unverifiable 'impact factors' from unrecognised commercial registries.",
 
-  "step.bestPractice.title": "6. Best Practice",
+  "step.bestPractice.title": "7. Best Practice",
   "step.bestPractice.archivingServices": "Archiving services",
   "step.bestPractice.repositoryPolicies": "Repository / self-archiving policies",
   "step.bestPractice.persistentIdentifiers": "Persistent identifiers",

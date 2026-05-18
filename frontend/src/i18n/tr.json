@@ -58,7 +58,7 @@
   "step.editorial.endogenyCompliant": "İç yazar oranı %25'i geçmiyor (editörler/kurul üyeleri, yayımlanan makalelerin %25'inden fazlasının yazarı değil).",
   "step.editorial.endogenyHint": "DOAJ kuralı: son iki sayıyı (ya da sürekli yayında son takvim yılını) sayın. Herhangi bir makalenin yazarı aynı zamanda editör, kurul üyesi veya hakem ise o makale 'iç' sayılır. Azami oran %25.",
 
-  "step.businessModel.title": "5. İş Modeli",
+  "step.businessModel.title": "6. İş Modeli",
   "step.businessModel.chargesApc": "Dergi makale işlem ücreti (APC) almaktadır.",
   "step.businessModel.apcFees": "APC ücretleri",
   "step.businessModel.currency": "Para birimi",
@@ -80,7 +80,7 @@
   "step.ethics.misleadingMetricsExplain": "DOAJ, akademik camia tarafından tanınmayan ticari kayıtçılardan alınan metriklerin görüntülenmesini yasaklar. Örneğin: Global Impact Factor, SJIF (Bilimsel Dergi Etki Faktörü), ResearchBib IF, Universal Impact Factor, CIF, i-Factor ve benzerleri. Bunlar hakemli metrikler değildir ve yazarları yanıltır. Yalnızca tanınan hizmetlerden doğrulanabilir metrikleri gösterin: Web of Science Dergi Etki Faktörü (JIF), Scopus CiteScore, SCImago SJR veya SNIP.",
   "step.ethics.noMisleadingMetrics": "Dergi, tanınmayan ticari kayıtçılardan alınan standart dışı veya doğrulanamaz 'etki faktörlerini' GÖRÜNTÜLEMEMEKTEDIR.",
 
-  "step.bestPractice.title": "6. En İyi Uygulamalar",
+  "step.bestPractice.title": "7. En İyi Uygulamalar",
   "step.bestPractice.archivingServices": "Arşivleme hizmetleri",
   "step.bestPractice.repositoryPolicies": "Depo / kendi arşivleme politikaları",
   "step.bestPractice.persistentIdentifiers": "Kalıcı tanımlayıcılar",

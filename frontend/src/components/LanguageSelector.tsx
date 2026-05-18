@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 const LANGUAGES = [
   { code: 'en', label: '🇬🇧 EN' },
   { code: 'tr', label: '🇹🇷 TR' },
+  { code: 'ar', label: '🇸🇦 AR' },
+  { code: 'id', label: '🇮🇩 ID' },
+  { code: 'zh', label: '🇨🇳 ZH' },
   { code: 'es', label: '🇪🇸 ES' },
   { code: 'fr', label: '🇫🇷 FR' },
   { code: 'de', label: '🇩🇪 DE' },
