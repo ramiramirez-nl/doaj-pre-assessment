@@ -55,12 +55,14 @@ const DEFAULT_VALUES: FormData = {
     instructionsForAuthorsUrl: '',
     avgWeeksSubmissionToPublication: 0,
     endogenyCompliant: false,
+    articleDatesDisplayed: false,
   },
   ethics: {
     publicationEthicsUrl: '',
     hasRetractionsPolicy: false,
     hasConflictPolicy: false,
     noMisleadingMetrics: false,
+    indexingClaimsVerifiable: false,
   },
   businessModel: {
     chargesApc: false,
@@ -68,11 +70,13 @@ const DEFAULT_VALUES: FormData = {
     apcInfoUrl: '',
     providesWaiver: false,
     chargesOtherFees: false,
+    otherFeesInfoUrl: '',
   },
   bestPractice: {
     archivingServices: [],
     repositoryPolicies: [],
     persistentIdentifiers: [],
+    articlesHaveDois: false,
   },
 };
 

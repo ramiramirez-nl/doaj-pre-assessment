@@ -29,6 +29,12 @@ export function StepEthics() {
         <span>{t('step.ethics.hasConflictPolicy')}</span>
       </label>
 
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('ethics.indexingClaimsVerifiable')} />
+        <span>{t('step.ethics.indexingClaimsVerifiable')}</span>
+      </label>
+      <p className="text-xs text-gray-500">{t('step.ethics.indexingClaimsHint')}</p>
+
       <div className="rounded-md border border-red-200 bg-red-50 p-3 space-y-2">
         <p className="text-xs font-semibold text-red-800 uppercase tracking-wide">{t('step.ethics.misleadingMetricsTitle')}</p>
         <p className="text-xs text-red-700">{t('step.ethics.misleadingMetricsExplain')}</p>

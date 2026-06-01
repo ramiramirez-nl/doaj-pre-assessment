@@ -49,6 +49,7 @@ export function StepReview() {
           <Row label={t('step.review.editorialBoardUrl')} value={data.editorial?.editorialBoardUrl} />
           <Row label={t('step.review.aimsAndScopeUrl')} value={data.editorial?.aimsAndScopeUrl} />
           <Row label={t('step.review.endogenyCompliant')} value={String(data.editorial?.endogenyCompliant)} />
+          <Row label={t('step.review.articleDatesDisplayed')} value={String(data.editorial?.articleDatesDisplayed)} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.ethics')}</h3>
         <dl>
@@ -56,16 +57,19 @@ export function StepReview() {
           <Row label={t('step.review.hasRetractionsPolicy')} value={String(data.ethics?.hasRetractionsPolicy)} />
           <Row label={t('step.review.hasConflictPolicy')} value={String(data.ethics?.hasConflictPolicy)} />
           <Row label={t('step.review.noMisleadingMetrics')} value={String(data.ethics?.noMisleadingMetrics)} />
+          <Row label={t('step.review.indexingClaimsVerifiable')} value={String(data.ethics?.indexingClaimsVerifiable)} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.businessModel')}</h3>
         <dl>
           <Row label={t('step.review.chargesApc')} value={String(data.businessModel?.chargesApc)} />
           <Row label={t('step.review.apcInfoUrl')} value={data.businessModel?.apcInfoUrl} />
+          <Row label={t('step.review.otherFeesInfoUrl')} value={data.businessModel?.otherFeesInfoUrl} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.bestPractice')}</h3>
         <dl>
           <Row label={t('step.review.archiving')} value={data.bestPractice?.archivingServices?.join(', ')} />
           <Row label={t('step.review.pids')} value={data.bestPractice?.persistentIdentifiers?.join(', ')} />
+          <Row label={t('step.review.articlesHaveDois')} value={String(data.bestPractice?.articlesHaveDois)} />
         </dl>
       </div>
     </section>

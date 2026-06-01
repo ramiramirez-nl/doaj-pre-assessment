@@ -6,6 +6,7 @@ import { validateEditorial } from './editorial';
 import { validateCopyright } from './copyright';
 import { validateEthics } from './ethics';
 import { validateBusinessModel } from './businessModel';
+import { validateBestPractice } from './bestPractice';
 
 export async function runAllValidations(
   formData: FormData
@@ -17,6 +18,7 @@ export async function runAllValidations(
     copyrightResults,
     ethicsResults,
     businessResults,
+    bestPracticeResults,
   ] = await Promise.all([
     validateOpenAccess(formData.openAccess),
     validateAbout(formData.about),
@@ -24,6 +26,7 @@ export async function runAllValidations(
     validateCopyright(formData.copyright),
     validateEthics(formData.ethics),
     validateBusinessModel(formData.businessModel),
+    validateBestPractice(formData.bestPractice),
   ]);
 
   const allResults: ReportItem[] = [
@@ -33,6 +36,7 @@ export async function runAllValidations(
     ...copyrightResults,
     ...ethicsResults,
     ...businessResults,
+    ...bestPracticeResults,
   ];
 
   const failCount = allResults.filter((r) => r.status === 'fail').length;

@@ -38,6 +38,7 @@ export interface EditorialData {
   instructionsForAuthorsUrl: string;
   avgWeeksSubmissionToPublication: number;
   endogenyCompliant: boolean;
+  articleDatesDisplayed: boolean;
 }
 
 export interface EthicsData {
@@ -45,6 +46,7 @@ export interface EthicsData {
   hasRetractionsPolicy: boolean;
   hasConflictPolicy: boolean;
   noMisleadingMetrics: boolean;
+  indexingClaimsVerifiable: boolean;
 }
 
 export interface BusinessModelData {
@@ -53,12 +55,14 @@ export interface BusinessModelData {
   apcInfoUrl: string;
   providesWaiver: boolean;
   chargesOtherFees: boolean;
+  otherFeesInfoUrl: string;
 }
 
 export interface BestPracticeData {
   archivingServices: string[];
   repositoryPolicies: string[];
   persistentIdentifiers: string[];
+  articlesHaveDois: boolean;
 }
 
 export interface FormData {

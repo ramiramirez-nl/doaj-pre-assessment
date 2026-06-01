@@ -67,6 +67,13 @@ export function StepBusinessModel() {
         <input type="checkbox" className="mt-0.5" {...register('businessModel.chargesOtherFees')} />
         <span>{t('step.businessModel.chargesOtherFees')}</span>
       </label>
+      {watch('businessModel.chargesOtherFees') && (
+        <LinkField
+          label={t('step.businessModel.otherFeesInfoUrl')}
+          hint={t('step.businessModel.otherFeesInfoHint')}
+          {...register('businessModel.otherFeesInfoUrl')}
+        />
+      )}
     </section>
   );
 }

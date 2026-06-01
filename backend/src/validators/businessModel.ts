@@ -80,5 +80,41 @@ export async function validateBusinessModel(
     }
   }
 
+  // Check: Other fees must be fully described
+  if (data.chargesOtherFees) {
+    if (!data.otherFeesInfoUrl) {
+      results.push({
+        section: 'Business Model',
+        field: 'otherFeesInfoUrl',
+        status: 'fail',
+        message: 'Other fees charged but no information URL provided.',
+        suggestion:
+          'DOAJ requires all author-facing fees (submission fees, page charges, colour printing, etc.) to be fully described on a public page. Add the URL to that page.',
+      });
+    } else {
+      const scraped = await scrapeUrl(data.otherFeesInfoUrl);
+      if (!scraped.accessible) {
+        results.push({
+          section: 'Business Model',
+          field: 'otherFeesInfoUrl',
+          status: 'warning',
+          message: `Could not access ${data.otherFeesInfoUrl} from our servers (may be geo-restricted).`,
+          suggestion:
+            'We could not verify this URL. Please confirm the page is publicly accessible and clearly describes all other fees charged to authors.',
+          url: data.otherFeesInfoUrl,
+        });
+      } else {
+        results.push({
+          section: 'Business Model',
+          field: 'otherFeesInfoUrl',
+          status: 'pass',
+          message: 'Other fees information page is accessible.',
+          suggestion: '',
+          url: data.otherFeesInfoUrl,
+        });
+      }
+    }
+  }
+
   return results;
 }

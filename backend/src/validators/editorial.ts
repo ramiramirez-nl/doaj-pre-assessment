@@ -118,7 +118,27 @@ export async function validateEditorial(
   );
   results.push(...instructionsResults);
 
-  // Check 6: Endogeny ≤ 25%
+  // Check 6: Article dates displayed (recommended)
+  if (!data.articleDatesDisplayed) {
+    results.push({
+      section: 'Editorial',
+      field: 'articleDatesDisplayed',
+      status: 'warning',
+      message: 'Articles do not display submission, acceptance, and publication dates.',
+      suggestion:
+        'DOAJ strongly recommends showing at least two of: date submitted, date accepted, date published on each article page. This is a transparency signal reviewed during evaluation.',
+    });
+  } else {
+    results.push({
+      section: 'Editorial',
+      field: 'articleDatesDisplayed',
+      status: 'pass',
+      message: 'Articles display submission/acceptance/publication dates.',
+      suggestion: '',
+    });
+  }
+
+  // Check 7: Endogeny ≤ 25%
   if (data.endogenyCompliant === false) {
     results.push({
       section: 'Editorial',

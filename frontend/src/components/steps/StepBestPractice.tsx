@@ -48,7 +48,7 @@ function ChipGroup({
 }
 
 export function StepBestPractice() {
-  const { watch, setValue } = useFormContext<FormData>();
+  const { register, watch, setValue } = useFormContext<FormData>();
   const { t } = useTranslation();
   const archiving = watch('bestPractice.archivingServices') ?? [];
   const repos = watch('bestPractice.repositoryPolicies') ?? [];
@@ -75,6 +75,11 @@ export function StepBestPractice() {
         value={pids}
         onChange={(v) => setValue('bestPractice.persistentIdentifiers', v)}
       />
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('bestPractice.articlesHaveDois')} />
+        <span>{t('step.bestPractice.articlesHaveDois')}</span>
+      </label>
+      <p className="text-xs text-gray-500">{t('step.bestPractice.doisHint')}</p>
     </section>
   );
 }

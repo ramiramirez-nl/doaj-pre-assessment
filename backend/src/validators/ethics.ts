@@ -92,7 +92,27 @@ export async function validateEthics(
     });
   }
 
-  // Check 4: No misleading metrics
+  // Check 4: Indexing claims verifiable
+  if (!data.indexingClaimsVerifiable) {
+    results.push({
+      section: 'Ethics',
+      field: 'indexingClaimsVerifiable',
+      status: 'fail',
+      message: 'Indexing and ranking claims on the journal website cannot be verified.',
+      suggestion:
+        'DOAJ requires all indexing claims to be accurate and verifiable on the official sites of those services. Remove or correct any outdated, exaggerated, or unverifiable claims (e.g. claiming Scopus/WoS indexing when not currently indexed).',
+    });
+  } else {
+    results.push({
+      section: 'Ethics',
+      field: 'indexingClaimsVerifiable',
+      status: 'pass',
+      message: 'All indexing claims are accurate and verifiable.',
+      suggestion: '',
+    });
+  }
+
+  // Check 5: No misleading metrics
   if (!data.noMisleadingMetrics) {
     results.push({
       section: 'Ethics',
