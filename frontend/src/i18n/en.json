@@ -1,7 +1,7 @@
 {
   "app.title": "DOAJ Pre-Assessment Tool",
   "app.subtitle": "Self-test your journal against DOAJ application criteria before you apply.",
-  "app.disclaimer": "<strong>Note:</strong> This tool uses AI to analyse URLs you provide. Results are indicative only and may contain errors — always verify independently before applying to DOAJ.",
+  "app.disclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" class=\"underline\">https://doaj.org/apply/guide/</a>.",
   "nav.back": "Back",
   "nav.next": "Next",
   "nav.submit": "Run Assessment",

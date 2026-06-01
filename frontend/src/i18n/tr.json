@@ -1,7 +1,7 @@
 {
   "app.title": "DOAJ Ön Değerlendirme Aracı",
   "app.subtitle": "Başvurmadan önce dergini DOAJ başvuru kriterlerine göre kendini test et.",
-  "app.disclaimer": "<strong>Not:</strong> Bu araç, girdiğiniz URL'leri yapay zeka ile analiz eder. Sonuçlar yalnızca gösterge niteliğindedir ve hatalı olabilir — DOAJ'a başvurmadan önce bağımsız olarak doğrulayın.",
+  "app.disclaimer": "Bu araç DOAJ ile bağlantılı değildir. Ön değerlendirmede olumlu sonuç alınması, resmi inceleme sürecinde kabulü garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" class=\"underline\">https://doaj.org/apply/guide/</a> adresindeki kılavuz doğrultusunda nihai kararı verecektir.",
   "nav.back": "Geri",
   "nav.next": "İleri",
   "nav.submit": "Değerlendirmeyi Başlat",
