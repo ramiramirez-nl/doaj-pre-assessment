@@ -135,6 +135,8 @@
 
   "linkField.openLink": "Bağlantıyı Aç",
 
+  "report.doajDisclaimer": "Bu araç DOAJ ile bağlantılı değildir. Ön değerlendirmede olumlu sonuç alınması, resmi inceleme sürecinde kabulü garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve https://doaj.org/apply/guide/ adresindeki kılavuz doğrultusunda nihai kararı verecektir.",
+
   "report.noIssues": "Sorun bulunamadı. Dergi, burada kontrol edilen DOAJ ön değerlendirme kriterlerini karşılıyor gibi görünmektedir.",
   "report.itemsNeedAttention_one": "{{count}} öğe dikkat gerektiriyor",
   "report.itemsNeedAttention_other": "{{count}} öğe dikkat gerektiriyor",

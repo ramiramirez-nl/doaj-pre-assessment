@@ -135,6 +135,8 @@
 
   "linkField.openLink": "Open Link",
 
+  "report.doajDisclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at https://doaj.org/apply/guide/.",
+
   "report.noIssues": "No issues found. The journal appears to meet the DOAJ pre-assessment criteria checked here.",
   "report.itemsNeedAttention_one": "{{count}} item needs attention",
   "report.itemsNeedAttention_other": "{{count}} items need attention",

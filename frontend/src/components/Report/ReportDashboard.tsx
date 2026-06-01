@@ -28,9 +28,8 @@ function buildPlainText(report: ReportResponse, lang: string): string {
     ),
     '',
     '--- Disclaimer ---',
-    'This report was generated using AI-assisted tools and may contain inaccuracies.',
-    'All results should be independently verified before submitting an application to DOAJ.',
-    'DOAJ: https://doaj.org',
+    'This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at https://doaj.org/apply/guide/.',
+    'This report was generated using AI-assisted tools and may contain inaccuracies. All results should be independently verified before submitting an application to DOAJ.',
   ];
   return lines.join('\n');
 }
@@ -110,6 +109,10 @@ export function ReportDashboard({ report, onReset, onBack }: Props) {
           )}
         </div>
       )}
+
+      <p className="rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-xs text-blue-800">
+        {t('report.doajDisclaimer')}
+      </p>
 
       <div className="flex flex-wrap gap-3 print:hidden">
         <button
