@@ -44,7 +44,7 @@
   "step.copyright.consistencyHint": "DOAJ 检查三个位置：总政策页面、各篇文章页面和 PDF 文件。三处必须显示相同的许可证和条款。不一致是常见的被拒原因。",
   "step.copyright.licenseConsistentOnArticlePages": "各篇文章页面上的许可证与全站许可证政策一致。",
   "step.copyright.licenseConsistentInPdfs": "文章 PDF 中的许可证文本与网站许可证政策一致。",
-  "step.copyright.noCopyrightConflicts": "网站、文章页面和 PDF 之间不存在版权冲突（例如，开放许可证旁边没有"版权所有"字样）。",
+  "step.copyright.noCopyrightConflicts": "网站、文章页面和 PDF 之间不存在版权冲突（例如，开放许可证旁边没有'版权所有'字样）。",
 
   "step.editorial.title": "4. 编辑流程",
   "step.editorial.peerReviewTypes": "同行评审类型",
@@ -67,7 +67,7 @@
   "step.ethics.hasConflictPolicy": "期刊有针对作者、审稿人和编辑的利益冲突声明及作者身份标准政策。",
   "step.ethics.misleadingMetricsTitle": "非标准指标 — DOAJ 政策",
   "step.ethics.misleadingMetricsExplain": "DOAJ 禁止展示来自学术界不认可的商业注册机构的指标，例如：Global Impact Factor、SJIF、ResearchBib IF、Universal Impact Factor、CIF、i-Factor 等。这些不是经过同行评审的指标，会误导作者。仅展示来自认可服务的可验证指标：Web of Science JIF、Scopus CiteScore、SCImago SJR 或 SNIP。",
-  "step.ethics.noMisleadingMetrics": "期刊不展示来自不认可商业注册机构的非标准或不可验证的"影响因子"。",
+  "step.ethics.noMisleadingMetrics": "期刊不展示来自不认可商业注册机构的非标准或不可验证的'影响因子'。",
 
   "step.businessModel.title": "6. 商业模式",
   "step.businessModel.chargesApc": "期刊收取文章处理费（APC）。",
