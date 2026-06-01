@@ -142,7 +142,7 @@ function App() {
             <LanguageSelector />
           </div>
           <p
-            className="mt-2 rounded-md border border-blue-200 bg-blue-50 px-3 py-2 text-xs text-blue-800"
+            className="mt-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800"
             dangerouslySetInnerHTML={{ __html: t('app.disclaimer') }}
           />
         </header>

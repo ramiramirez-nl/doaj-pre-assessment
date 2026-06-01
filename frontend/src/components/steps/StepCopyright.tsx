@@ -52,9 +52,9 @@ export function StepCopyright() {
       </label>
       <LinkField label={t('step.copyright.copyrightTermsUrl')} {...register('copyright.copyrightTermsUrl')} />
 
-      <div className="rounded-md border border-amber-200 bg-amber-50 p-3 space-y-2">
-        <p className="text-xs font-semibold text-amber-800 uppercase tracking-wide">{t('step.copyright.consistencyTitle')}</p>
-        <p className="text-xs text-amber-700">{t('step.copyright.consistencyHint')}</p>
+      <div className="rounded-md border border-blue-200 bg-blue-50 p-3 space-y-2">
+        <p className="text-xs font-semibold text-blue-800 uppercase tracking-wide">{t('step.copyright.consistencyTitle')}</p>
+        <p className="text-xs text-blue-700">{t('step.copyright.consistencyHint')}</p>
         <label className="flex items-start gap-2 text-sm text-gray-700">
           <input type="checkbox" className="mt-0.5" {...register('copyright.licenseConsistentOnArticlePages')} />
           <span>{t('step.copyright.licenseConsistentOnArticlePages')}</span>
