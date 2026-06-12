@@ -9,6 +9,7 @@ docs/superpowers/
 .vscode/
 __pycache__/
 temp/
+.playwright-mcp/
 
 # Research source artifacts (kept locally, not versioned)
 *.jpg
