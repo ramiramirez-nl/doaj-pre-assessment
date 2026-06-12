@@ -166,6 +166,7 @@ function App() {
   };
 
   const reset = () => {
+    if (!window.confirm(t('report.confirmNew'))) return;
     setReport(null);
     setError(null);
     clearDraft();

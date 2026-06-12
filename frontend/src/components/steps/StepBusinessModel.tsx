@@ -61,6 +61,7 @@ export function StepBusinessModel() {
       )}
       <LinkField
         label={t('step.businessModel.apcInfoUrl')}
+        hint={t('step.businessModel.apcInfoHint')}
         error={errors.businessModel?.apcInfoUrl?.message}
         {...register('businessModel.apcInfoUrl', {
           validate: (value, formValues) => {

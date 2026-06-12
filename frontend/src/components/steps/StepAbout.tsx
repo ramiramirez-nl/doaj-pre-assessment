@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { ChipInput } from '../ChipInput';
 import { URL_PATTERN, ISSN_PATTERN } from '../../utils/validation';
 
 const inputCls =
@@ -36,6 +37,7 @@ export function StepAbout() {
       </div>
       <LinkField
         label={t('step.about.homepageUrl')}
+        hint={t('step.about.homepageHint')}
         error={errors.about?.homepageUrl?.message}
         {...register('about.homepageUrl', {
           required: t('validation.required'),
@@ -70,9 +72,6 @@ export function StepAbout() {
           <FieldError message={errors.about?.issnOnline?.message} />
         </div>
       </div>
-      <p className="text-xs text-gray-500">
-        At least one ISSN is required. Both will be checked against issn.org.
-      </p>
     </section>
   );
 }

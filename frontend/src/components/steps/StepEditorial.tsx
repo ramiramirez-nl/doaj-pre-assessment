@@ -58,6 +58,7 @@ export function StepEditorial() {
       </div>
       <LinkField
         label={t('step.editorial.peerReviewPolicyUrl')}
+        hint={t('step.editorial.peerReviewPolicyHint')}
         error={errors.editorial?.peerReviewPolicyUrl?.message}
         {...register('editorial.peerReviewPolicyUrl', requiredUrlRules)}
       />
@@ -84,6 +85,7 @@ export function StepEditorial() {
       />
       <LinkField
         label={t('step.editorial.editorialBoardUrl')}
+        hint={t('step.editorial.editorialBoardHint')}
         error={errors.editorial?.editorialBoardUrl?.message}
         {...register('editorial.editorialBoardUrl', requiredUrlRules)}
       />

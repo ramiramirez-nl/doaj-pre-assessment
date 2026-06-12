@@ -44,6 +44,7 @@ export function StepCopyright() {
       </div>
       <LinkField
         label={t('step.copyright.licenseInfoUrl')}
+        hint={t('step.copyright.licenseInfoHint')}
         error={errors.copyright?.licenseInfoUrl?.message}
         {...register('copyright.licenseInfoUrl', {
           pattern: { value: URL_PATTERN, message: t('validation.url') },

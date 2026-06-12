@@ -6,6 +6,9 @@ dist/
 *.tsbuildinfo
 .claude/
 docs/superpowers/
+.vscode/
+__pycache__/
+temp/
 
 # Research source artifacts (kept locally, not versioned)
 *.jpg
