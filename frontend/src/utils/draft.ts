@@ -13,6 +13,7 @@ export function loadDraft(defaults: FormData): FormData | null {
       about: { ...defaults.about, ...parsed.about },
       copyright: { ...defaults.copyright, ...parsed.copyright },
       editorial: { ...defaults.editorial, ...parsed.editorial },
+      ethics: { ...defaults.ethics, ...parsed.ethics },
       businessModel: { ...defaults.businessModel, ...parsed.businessModel },
       bestPractice: { ...defaults.bestPractice, ...parsed.bestPractice },
     };

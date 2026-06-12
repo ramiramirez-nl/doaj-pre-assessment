@@ -31,10 +31,6 @@ export function StepAbout() {
         />
         <FieldError message={errors.about?.journalTitle?.message} />
       </div>
-      <div>
-        <label className="block text-sm font-medium text-gray-700">{t('step.about.alternativeTitle')}</label>
-        <input className={inputCls} {...register('about.alternativeTitle')} />
-      </div>
       <LinkField
         label={t('step.about.homepageUrl')}
         hint={t('step.about.homepageHint')}
