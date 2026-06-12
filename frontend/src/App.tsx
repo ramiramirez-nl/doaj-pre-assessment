@@ -41,6 +41,7 @@ const STEP_FIELDS: FieldPath<FormData>[][] = [
     'editorial.instructionsForAuthorsUrl',
     'editorial.plagiarismPolicyUrl',
   ],
+  [],
   ['businessModel.apcInfoUrl'],
   [],
   [],
@@ -212,6 +213,10 @@ function App() {
             <div>
               <h1 className="text-3xl font-bold text-gray-900">{t('app.title')}</h1>
               <p className="mt-1 text-sm text-gray-600">{t('app.subtitle')}</p>
+              <p
+                className="mt-2 text-xs text-gray-500"
+                dangerouslySetInnerHTML={{ __html: t('app.disclaimer') }}
+              />
             </div>
             <LanguageSelector />
           </div>

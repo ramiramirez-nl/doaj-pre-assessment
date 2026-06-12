@@ -90,7 +90,7 @@ export interface ReportResponse {
   overallStatus: 'pass' | 'fail' | 'warning';
   passCount: number;
   failCount: number;
-  warningCount?: number;
+  warningCount: number;
   /** All results, including passes (sent by newer backend) */
   items?: ReportItem[];
   /** Non-pass items only (legacy) */

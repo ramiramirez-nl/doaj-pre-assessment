@@ -2,7 +2,6 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
-import { ChipInput } from '../ChipInput';
 import { URL_PATTERN, ISSN_PATTERN } from '../../utils/validation';
 
 const inputCls =

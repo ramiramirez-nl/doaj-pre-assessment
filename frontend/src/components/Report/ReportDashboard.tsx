@@ -10,14 +10,14 @@ interface Props {
   onBack: () => void;
 }
 
-function buildPlainText(report: ReportResponse, lang: string): string {
+function buildPlainText(report: ReportResponse, lang: string, t: (key: string) => string): string {
   const all = report.items ?? report.issues;
   const lines = [
     'DOAJ Pre-Assessment Report',
     `Generated: ${new Date().toLocaleString(lang)}`,
     '',
     `Overall Status: ${report.overallStatus.toUpperCase()}`,
-    `Passed: ${report.passCount}  |  Warnings: ${report.warningCount ?? 0}  |  Failures: ${report.failCount}`,
+    `Passed: ${report.passCount}  |  Warnings: ${report.warningCount}  |  Failures: ${report.failCount}`,
     '',
     '--- All Checks ---',
     ...all.map(
@@ -28,8 +28,7 @@ function buildPlainText(report: ReportResponse, lang: string): string {
     ),
     '',
     '--- Disclaimer ---',
-    'This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at https://doaj.org/apply/guide/.',
-    'This report was generated using AI-assisted tools and may contain inaccuracies. All results should be independently verified before submitting an application to DOAJ.',
+    t('report.doajDisclaimer'),
   ];
   return lines.join('\n');
 }
@@ -60,7 +59,7 @@ export function ReportDashboard({ report, onReset, onBack }: Props) {
   const passes = all.filter((i) => i.status === 'pass');
 
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(buildPlainText(report, i18n.language));
+    await navigator.clipboard.writeText(buildPlainText(report, i18n.language, t));
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
