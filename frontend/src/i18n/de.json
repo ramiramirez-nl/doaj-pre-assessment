@@ -135,5 +135,24 @@
   "summary.pass": "Wahrscheinlich DOAJ-bereit",
   "summary.warning": "Erfordert Aufmerksamkeit",
   "summary.fail": "Noch nicht bereit",
-  "summary.checksInfo": "{{passCount}} Prüfungen bestanden · {{failCount}} Probleme gefunden"
+  "summary.checksInfo": "{{passCount}} Prüfungen bestanden · {{failCount}} Probleme gefunden",
+
+  "validation.required": "Dieses Feld ist erforderlich.",
+  "validation.url": "Geben Sie eine gültige URL ein, die mit http(s):// beginnt.",
+  "validation.issn": "Geben Sie eine gültige ISSN im Format 1234-5678 ein.",
+  "validation.issnRequired": "Mindestens eine ISSN (Print oder Online) ist erforderlich.",
+
+  "draft.restored": "Ein gespeicherter Entwurf wurde wiederhergestellt. Ihr Fortschritt wird automatisch gespeichert.",
+  "draft.clear": "Entwurf löschen",
+
+  "progress.title": "Bewertung läuft…",
+  "progress.phase.starting": "Bewertung wird vorbereitet…",
+  "progress.phase.scraping": "Die angegebenen Seiten werden besucht und gelesen…",
+  "progress.phase.issn": "ISSN-Registrierung auf issn.org wird geprüft…",
+  "progress.phase.ai": "Seiteninhalte werden mit KI anhand der DOAJ-Kriterien analysiert…",
+  "progress.phase.compiling": "Bericht wird erstellt…",
+  "progress.elapsed": "{{seconds}} s vergangen",
+  "progress.note": "Dies dauert in der Regel 1–2 Minuten. Bitte lassen Sie diesen Tab geöffnet.",
+
+  "report.disclaimer": "Dieses Tool ist nicht mit DOAJ verbunden. Ein positives Ergebnis bei der Vorbewertung garantiert keine Aufnahme im formellen Prüfungsprozess. Das DOAJ-Redaktionsteam wird Ihre Zeitschrift nach Eingang der formellen Bewerbung prüfen und die endgültige Entscheidung gemäß den Richtlinien unter <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a> treffen."
 }

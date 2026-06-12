@@ -135,5 +135,24 @@
   "summary.pass": "Probablement prête pour DOAJ",
   "summary.warning": "Nécessite attention",
   "summary.fail": "Pas encore prête",
-  "summary.checksInfo": "{{passCount}} vérifications réussies · {{failCount}} problèmes trouvés"
+  "summary.checksInfo": "{{passCount}} vérifications réussies · {{failCount}} problèmes trouvés",
+
+  "validation.required": "Ce champ est obligatoire.",
+  "validation.url": "Saisissez une URL valide commençant par http(s)://.",
+  "validation.issn": "Saisissez un ISSN valide au format 1234-5678.",
+  "validation.issnRequired": "Au moins un ISSN (imprimé ou en ligne) est requis.",
+
+  "draft.restored": "Un brouillon enregistré a été restauré. Votre progression est sauvegardée automatiquement.",
+  "draft.clear": "Effacer le brouillon",
+
+  "progress.title": "Évaluation en cours…",
+  "progress.phase.starting": "Préparation de l'évaluation…",
+  "progress.phase.scraping": "Consultation et lecture des pages fournies…",
+  "progress.phase.issn": "Vérification de l'enregistrement ISSN sur issn.org…",
+  "progress.phase.ai": "Analyse du contenu des pages selon les critères DOAJ avec l'IA…",
+  "progress.phase.compiling": "Compilation du rapport…",
+  "progress.elapsed": "{{seconds}} s écoulées",
+  "progress.note": "Cela prend généralement 1 à 2 minutes. Veuillez garder cet onglet ouvert.",
+
+  "report.disclaimer": "Cet outil n'est pas affilié au DOAJ. Un résultat positif lors de la pré-évaluation ne garantit pas l'acceptation lors du processus d'examen formel. L'équipe éditoriale du DOAJ examinera votre revue après réception de la candidature formelle et prendra la décision finale conformément aux directives disponibles sur <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>."
 }

@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { URL_PATTERN } from '../../utils/validation';
 
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -12,7 +13,7 @@ const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
 
 export function StepOpenAccess() {
-  const { register, setValue, watch } = useFormContext<FormData>();
+  const { register, setValue, watch, formState: { errors } } = useFormContext<FormData>();
   const { t } = useTranslation();
 
   const stored = watch('openAccess.licenseStartDate') ?? '';
@@ -46,7 +47,11 @@ export function StepOpenAccess() {
       <LinkField
         label={t('step.openAccess.statementUrl')}
         hint={t('step.openAccess.statementHint')}
-        {...register('openAccess.openAccessStatementUrl')}
+        error={errors.openAccess?.openAccessStatementUrl?.message}
+        {...register('openAccess.openAccessStatementUrl', {
+          required: t('validation.required'),
+          pattern: { value: URL_PATTERN, message: t('validation.url') },
+        })}
       />
       <div>
         <label className="block text-sm font-medium text-gray-700">

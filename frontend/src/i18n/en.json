@@ -149,5 +149,24 @@
   "summary.pass": "Likely DOAJ-ready",
   "summary.warning": "Needs attention",
   "summary.fail": "Not yet ready",
-  "summary.checksInfo": "{{passCount}} checks passed · {{failCount}} issues found"
+  "summary.checksInfo": "{{passCount}} checks passed · {{failCount}} issues found",
+
+  "validation.required": "This field is required.",
+  "validation.url": "Enter a valid URL starting with http(s)://.",
+  "validation.issn": "Enter a valid ISSN in the format 1234-5678.",
+  "validation.issnRequired": "At least one ISSN (print or online) is required.",
+
+  "draft.restored": "A saved draft was restored. Your progress is saved automatically.",
+  "draft.clear": "Clear draft",
+
+  "progress.title": "Running assessment…",
+  "progress.phase.starting": "Preparing the assessment…",
+  "progress.phase.scraping": "Visiting and reading the pages you provided…",
+  "progress.phase.issn": "Checking ISSN registration at issn.org…",
+  "progress.phase.ai": "Analyzing page content against DOAJ criteria with AI…",
+  "progress.phase.compiling": "Compiling the report…",
+  "progress.elapsed": "{{seconds}} s elapsed",
+  "progress.note": "This usually takes 1–2 minutes. Please keep this tab open.",
+
+  "report.disclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>."
 }

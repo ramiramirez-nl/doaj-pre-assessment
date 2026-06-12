@@ -2,6 +2,7 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { URL_PATTERN } from '../../utils/validation';
 
 const PEER_REVIEW_TYPES = [
   'Editorial review',
@@ -16,8 +17,12 @@ const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
 
 export function StepEditorial() {
-  const { register, watch, setValue } = useFormContext<FormData>();
+  const { register, watch, setValue, formState: { errors } } = useFormContext<FormData>();
   const { t } = useTranslation();
+  const requiredUrlRules = {
+    required: t('validation.required'),
+    pattern: { value: URL_PATTERN, message: t('validation.url') },
+  };
   const selected = watch('editorial.peerReviewTypes') ?? [];
 
   const toggle = (type: string) => {
@@ -51,15 +56,42 @@ export function StepEditorial() {
           ))}
         </div>
       </div>
-      <LinkField label={t('step.editorial.peerReviewPolicyUrl')} {...register('editorial.peerReviewPolicyUrl')} />
+      <LinkField
+        label={t('step.editorial.peerReviewPolicyUrl')}
+        error={errors.editorial?.peerReviewPolicyUrl?.message}
+        {...register('editorial.peerReviewPolicyUrl', requiredUrlRules)}
+      />
       <label className="flex items-start gap-2 text-sm text-gray-700">
         <input type="checkbox" className="mt-0.5" {...register('editorial.screensPlagiarism')} />
         <span>{t('step.editorial.screensPlagiarism')}</span>
       </label>
-      <LinkField label={t('step.editorial.plagiarismPolicyUrl')} {...register('editorial.plagiarismPolicyUrl')} />
-      <LinkField label={t('step.editorial.aimsAndScopeUrl')} {...register('editorial.aimsAndScopeUrl')} />
-      <LinkField label={t('step.editorial.editorialBoardUrl')} {...register('editorial.editorialBoardUrl')} />
-      <LinkField label={t('step.editorial.instructionsForAuthorsUrl')} {...register('editorial.instructionsForAuthorsUrl')} />
+      <LinkField
+        label={t('step.editorial.plagiarismPolicyUrl')}
+        error={errors.editorial?.plagiarismPolicyUrl?.message}
+        {...register('editorial.plagiarismPolicyUrl', {
+          validate: (value, formValues) => {
+            if (!value) {
+              return !formValues.editorial.screensPlagiarism || t('validation.required');
+            }
+            return URL_PATTERN.test(value) || t('validation.url');
+          },
+        })}
+      />
+      <LinkField
+        label={t('step.editorial.aimsAndScopeUrl')}
+        error={errors.editorial?.aimsAndScopeUrl?.message}
+        {...register('editorial.aimsAndScopeUrl', requiredUrlRules)}
+      />
+      <LinkField
+        label={t('step.editorial.editorialBoardUrl')}
+        error={errors.editorial?.editorialBoardUrl?.message}
+        {...register('editorial.editorialBoardUrl', requiredUrlRules)}
+      />
+      <LinkField
+        label={t('step.editorial.instructionsForAuthorsUrl')}
+        error={errors.editorial?.instructionsForAuthorsUrl?.message}
+        {...register('editorial.instructionsForAuthorsUrl', requiredUrlRules)}
+      />
       <div>
         <label className="block text-sm font-medium text-gray-700">{t('step.editorial.avgWeeks')}</label>
         <input

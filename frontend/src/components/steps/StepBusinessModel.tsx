@@ -2,12 +2,13 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { URL_PATTERN } from '../../utils/validation';
 
 const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
 
 export function StepBusinessModel() {
-  const { register, control, watch } = useFormContext<FormData>();
+  const { register, control, watch, formState: { errors } } = useFormContext<FormData>();
   const { t } = useTranslation();
   const chargesApc = watch('businessModel.chargesApc');
   const { fields, append, remove } = useFieldArray({ control, name: 'businessModel.apcFees' });
@@ -58,7 +59,18 @@ export function StepBusinessModel() {
           </button>
         </div>
       )}
-      <LinkField label={t('step.businessModel.apcInfoUrl')} {...register('businessModel.apcInfoUrl')} />
+      <LinkField
+        label={t('step.businessModel.apcInfoUrl')}
+        error={errors.businessModel?.apcInfoUrl?.message}
+        {...register('businessModel.apcInfoUrl', {
+          validate: (value, formValues) => {
+            if (!value) {
+              return !formValues.businessModel.chargesApc || t('validation.required');
+            }
+            return URL_PATTERN.test(value) || t('validation.url');
+          },
+        })}
+      />
       <label className="flex items-start gap-2 text-sm text-gray-700">
         <input type="checkbox" className="mt-0.5" {...register('businessModel.providesWaiver')} />
         <span>{t('step.businessModel.providesWaiver')}</span>

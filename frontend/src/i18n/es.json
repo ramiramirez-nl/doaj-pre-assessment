@@ -135,5 +135,24 @@
   "summary.pass": "Probablemente lista para DOAJ",
   "summary.warning": "Requiere atención",
   "summary.fail": "Aún no está lista",
-  "summary.checksInfo": "{{passCount}} verificaciones aprobadas · {{failCount}} problemas encontrados"
+  "summary.checksInfo": "{{passCount}} verificaciones aprobadas · {{failCount}} problemas encontrados",
+
+  "validation.required": "Este campo es obligatorio.",
+  "validation.url": "Introduzca una URL válida que empiece por http(s)://.",
+  "validation.issn": "Introduzca un ISSN válido con el formato 1234-5678.",
+  "validation.issnRequired": "Se requiere al menos un ISSN (impreso o en línea).",
+
+  "draft.restored": "Se restauró un borrador guardado. Su progreso se guarda automáticamente.",
+  "draft.clear": "Borrar borrador",
+
+  "progress.title": "Ejecutando la evaluación…",
+  "progress.phase.starting": "Preparando la evaluación…",
+  "progress.phase.scraping": "Visitando y leyendo las páginas proporcionadas…",
+  "progress.phase.issn": "Comprobando el registro del ISSN en issn.org…",
+  "progress.phase.ai": "Analizando el contenido de las páginas según los criterios de DOAJ con IA…",
+  "progress.phase.compiling": "Generando el informe…",
+  "progress.elapsed": "{{seconds}} s transcurridos",
+  "progress.note": "Esto suele tardar 1–2 minutos. Mantenga esta pestaña abierta.",
+
+  "report.disclaimer": "Esta herramienta no está afiliada con DOAJ. Un resultado positivo en la preevaluación no garantiza la aceptación en el proceso de revisión formal. El equipo editorial de DOAJ revisará su revista tras recibir la solicitud formal y tomará la decisión final siguiendo las directrices disponibles en <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>."
 }

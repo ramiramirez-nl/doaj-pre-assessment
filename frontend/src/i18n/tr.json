@@ -149,5 +149,24 @@
   "summary.pass": "Muhtemelen DOAJ'a hazır",
   "summary.warning": "Dikkat gerekiyor",
   "summary.fail": "Henüz hazır değil",
-  "summary.checksInfo": "{{passCount}} kontrol geçti · {{failCount}} sorun bulundu"
+  "summary.checksInfo": "{{passCount}} kontrol geçti · {{failCount}} sorun bulundu",
+
+  "validation.required": "Bu alan zorunludur.",
+  "validation.url": "http(s):// ile başlayan geçerli bir URL girin.",
+  "validation.issn": "1234-5678 biçiminde geçerli bir ISSN girin.",
+  "validation.issnRequired": "En az bir ISSN (basılı veya çevrimiçi) gereklidir.",
+
+  "draft.restored": "Kaydedilmiş taslak geri yüklendi. İlerlemeniz otomatik olarak kaydedilir.",
+  "draft.clear": "Taslağı temizle",
+
+  "progress.title": "Değerlendirme çalışıyor…",
+  "progress.phase.starting": "Değerlendirme hazırlanıyor…",
+  "progress.phase.scraping": "Verdiğiniz sayfalar ziyaret edilip okunuyor…",
+  "progress.phase.issn": "issn.org üzerinde ISSN kaydı kontrol ediliyor…",
+  "progress.phase.ai": "Sayfa içerikleri DOAJ kriterlerine göre yapay zeka ile analiz ediliyor…",
+  "progress.phase.compiling": "Rapor derleniyor…",
+  "progress.elapsed": "{{seconds}} sn geçti",
+  "progress.note": "Bu işlem genellikle 1–2 dakika sürer. Lütfen bu sekmeyi açık tutun.",
+
+  "report.disclaimer": "Bu araç DOAJ ile ilişkili değildir. Ön değerlendirmede olumlu bir sonuç, resmi inceleme sürecinde kabul edileceğini garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve nihai kararı <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a> adresindeki kılavuza göre verecektir."
 }

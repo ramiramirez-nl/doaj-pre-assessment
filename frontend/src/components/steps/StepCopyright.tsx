@@ -2,11 +2,12 @@ import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
+import { URL_PATTERN } from '../../utils/validation';
 
 const LICENSES = ['CC BY', 'CC BY-SA', 'CC BY-NC', 'CC BY-ND', 'CC BY-NC-SA', 'CC BY-NC-ND', 'CC0'];
 
 export function StepCopyright() {
-  const { register, watch, setValue } = useFormContext<FormData>();
+  const { register, watch, setValue, formState: { errors } } = useFormContext<FormData>();
   const { t } = useTranslation();
   const selected = watch('copyright.licenses') ?? [];
 
@@ -41,7 +42,13 @@ export function StepCopyright() {
           ))}
         </div>
       </div>
-      <LinkField label={t('step.copyright.licenseInfoUrl')} {...register('copyright.licenseInfoUrl')} />
+      <LinkField
+        label={t('step.copyright.licenseInfoUrl')}
+        error={errors.copyright?.licenseInfoUrl?.message}
+        {...register('copyright.licenseInfoUrl', {
+          pattern: { value: URL_PATTERN, message: t('validation.url') },
+        })}
+      />
       <label className="flex items-start gap-2 text-sm text-gray-700">
         <input type="checkbox" className="mt-0.5" {...register('copyright.embedsLicenseInArticles')} />
         <span>{t('step.copyright.embedsLicense')}</span>
@@ -50,7 +57,13 @@ export function StepCopyright() {
         <input type="checkbox" className="mt-0.5" {...register('copyright.authorsRetainCopyright')} />
         <span>{t('step.copyright.authorsRetain')}</span>
       </label>
-      <LinkField label={t('step.copyright.copyrightTermsUrl')} {...register('copyright.copyrightTermsUrl')} />
+      <LinkField
+        label={t('step.copyright.copyrightTermsUrl')}
+        error={errors.copyright?.copyrightTermsUrl?.message}
+        {...register('copyright.copyrightTermsUrl', {
+          pattern: { value: URL_PATTERN, message: t('validation.url') },
+        })}
+      />
 
       <div className="rounded-md border border-blue-200 bg-blue-50 p-3 space-y-2">
         <p className="text-xs font-semibold text-blue-800 uppercase tracking-wide">{t('step.copyright.consistencyTitle')}</p>
