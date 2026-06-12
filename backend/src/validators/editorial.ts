@@ -2,6 +2,7 @@ import { scrapeUrl } from '../scraper/pageScraper';
 import { analyzePageContent } from '../ai/geminiClient';
 import type { EditorialData } from '../types/formData';
 import type { ReportItem } from '../types/report';
+import { describeAccessFailure } from './shared';
 
 async function checkUrl(
   url: string,
@@ -23,14 +24,13 @@ async function checkUrl(
   }
   const scraped = await scrapeUrl(url);
   if (!scraped.accessible) {
-    // URL was provided but we couldn't reach it — could be geo-blocking
+    const failure = describeAccessFailure(url, scraped);
     results.push({
       section,
       field,
-      status: 'warning',
-      message: `Could not access ${url} from our servers (may be geo-restricted).`,
-      suggestion:
-        'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
+      status: scraped.errorType === 'timeout' ? 'warning' : 'fail',
+      message: failure.message,
+      suggestion: failure.suggestion,
       url,
     });
     return results;
@@ -43,11 +43,17 @@ async function checkUrl(
   results.push({
     section,
     field,
-    status: analysis.found ? 'pass' : 'fail',
+    status: analysis.found ? 'pass' : analysis.skipped ? 'warning' : 'fail',
     message: analysis.found
       ? `Required content found at ${url}.`
-      : `Required content not found. ${analysis.evidence}`,
-    suggestion: analysis.found ? '' : failSuggestion,
+      : analysis.skipped
+        ? `The page is accessible, but AI verification of its content could not run. ${analysis.evidence}`
+        : `Required content not found. ${analysis.evidence}`,
+    suggestion: analysis.found
+      ? ''
+      : analysis.skipped
+        ? `Verify the page content manually. ${failSuggestion}`
+        : failSuggestion,
     url,
   });
   return results;

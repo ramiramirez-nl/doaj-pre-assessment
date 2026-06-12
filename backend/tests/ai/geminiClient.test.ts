@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock('@google/generative-ai', () => ({
   GoogleGenerativeAI: vi.fn().mockImplementation(function () {
@@ -22,6 +22,25 @@ vi.mock('@google/generative-ai', () => ({
 import { analyzePageContent } from '../../src/ai/geminiClient';
 
 describe('analyzePageContent', () => {
+  beforeEach(() => {
+    vi.stubEnv('GEMINI_API_KEY', 'test-key');
+  });
+
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it('returns a skipped warning result when no API key is configured', async () => {
+    vi.stubEnv('GEMINI_API_KEY', '');
+    const result = await analyzePageContent({
+      pageText: 'Some page content',
+      criteria: 'Does this page have an open access statement?',
+      url: 'https://example.com',
+    });
+    expect(result.found).toBe(false);
+    expect(result.skipped).toBe(true);
+  });
+
   it('returns found true when content matches criteria', async () => {
     const result = await analyzePageContent({
       pageText: 'This work is licensed under Creative Commons BY 4.0',

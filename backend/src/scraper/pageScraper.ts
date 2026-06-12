@@ -1,11 +1,14 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
+export type ScrapeErrorType = 'timeout' | 'network' | 'http';
+
 export interface ScrapeResult {
   accessible: boolean;
   text: string;
   links: string[];
   statusCode: number;
+  errorType?: ScrapeErrorType;
 }
 
 const REAL_BROWSER_HEADERS = {
@@ -31,16 +34,15 @@ export async function scrapeUrl(url: string): Promise<ScrapeResult> {
       headers: REAL_BROWSER_HEADERS,
       timeout: 20000,
       maxRedirects: 5,
-      validateStatus: (status) => status < 500, // accept 4xx as a response
+      validateStatus: (status) => status < 500,
       responseType: 'text',
     });
 
     const statusCode = response.status;
     const html = String(response.data ?? '');
 
-    // 4xx = page exists but blocked/missing — treat as not accessible content-wise
     if (statusCode >= 400) {
-      return { accessible: false, text: '', links: [], statusCode };
+      return { accessible: false, text: '', links: [], statusCode, errorType: 'http' };
     }
 
     const $ = cheerio.load(html);
@@ -54,7 +56,13 @@ export async function scrapeUrl(url: string): Promise<ScrapeResult> {
     });
 
     return { accessible: true, text, links, statusCode };
-  } catch {
-    return { accessible: false, text: '', links: [], statusCode: 0 };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    const errorType: ScrapeErrorType =
+      err instanceof Error && (err.name === 'TimeoutError' || /timeout/i.test(message))
+        ? 'timeout'
+        : 'network';
+    console.warn(`Scrape failed for ${url}: ${message.slice(0, 200)}`);
+    return { accessible: false, text: '', links: [], statusCode: 0, errorType };
   }
 }

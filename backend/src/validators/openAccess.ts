@@ -2,6 +2,7 @@ import { scrapeUrl } from '../scraper/pageScraper';
 import { analyzePageContent } from '../ai/geminiClient';
 import type { OpenAccessData } from '../types/formData';
 import type { ReportItem } from '../types/report';
+import { describeAccessFailure } from './shared';
 
 export async function validateOpenAccess(
   data: OpenAccessData
@@ -64,13 +65,13 @@ export async function validateOpenAccess(
 
   const scraped = await scrapeUrl(data.openAccessStatementUrl);
   if (!scraped.accessible) {
+    const failure = describeAccessFailure(data.openAccessStatementUrl, scraped);
     results.push({
       section: 'Open Access',
       field: 'openAccessStatementUrl',
-      status: 'warning',
-      message: `Could not access ${data.openAccessStatementUrl} from our servers (may be geo-restricted).`,
-      suggestion:
-        'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
+      status: scraped.errorType === 'timeout' ? 'warning' : 'fail',
+      message: failure.message,
+      suggestion: failure.suggestion,
       url: data.openAccessStatementUrl,
     });
     return results;
@@ -87,13 +88,17 @@ export async function validateOpenAccess(
   results.push({
     section: 'Open Access',
     field: 'openAccessStatementUrl',
-    status: analysis.found ? 'pass' : 'fail',
+    status: analysis.found ? 'pass' : analysis.skipped ? 'warning' : 'fail',
     message: analysis.found
       ? 'Open access statement found on the linked page.'
-      : `Open access statement not clearly found. Evidence: ${analysis.evidence}`,
+      : analysis.skipped
+        ? `The page is accessible, but AI verification of its content could not run. ${analysis.evidence}`
+        : `Open access statement not clearly found. Evidence: ${analysis.evidence}`,
     suggestion: analysis.found
       ? ''
-      : 'Add an explicit open access statement to this page. It must state that content is immediately accessible for free under an open license.',
+      : analysis.skipped
+        ? 'Verify manually that the page contains an explicit open access statement.'
+        : 'Add an explicit open access statement to this page. It must state that content is immediately accessible for free under an open license.',
     url: data.openAccessStatementUrl,
   });
 

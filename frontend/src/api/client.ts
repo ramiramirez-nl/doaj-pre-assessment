@@ -10,7 +10,14 @@ export async function submitAssessment(
   });
 
   if (!response.ok) {
-    throw new Error(`Assessment failed: ${response.statusText}`);
+    let detail = response.statusText;
+    try {
+      const body = (await response.json()) as { error?: string };
+      if (body.error) detail = body.error;
+    } catch {
+      // non-JSON error body — keep statusText
+    }
+    throw new Error(detail);
   }
 
   return response.json() as Promise<ReportResponse>;

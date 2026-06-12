@@ -29,11 +29,27 @@ export interface AnalysisResult {
   confidence: 'high' | 'medium' | 'low';
   evidence: string;
   issues: string[];
+  /** True when the AI check could not run (no API key / service error). */
+  skipped?: boolean;
+}
+
+export function isAiConfigured(): boolean {
+  return Boolean(process.env.OPENAI_API_KEY ?? process.env.GEMINI_API_KEY);
 }
 
 export async function analyzePageContent(
   input: AnalysisInput
 ): Promise<AnalysisResult> {
+  if (!isAiConfigured()) {
+    return {
+      found: false,
+      confidence: 'low',
+      evidence: 'AI verification skipped: no API key configured (OPENAI_API_KEY or GEMINI_API_KEY).',
+      issues: ['AI verification skipped'],
+      skipped: true,
+    };
+  }
+
   const prompt = `You are a DOAJ (Directory of Open Access Journals) compliance checker.
 
 Analyze the following webpage content and check if it meets this criterion:
@@ -77,6 +93,7 @@ Respond ONLY with valid JSON in this exact format, no markdown fences:
         confidence: 'low',
         evidence: `Could not parse AI response: ${text.slice(0, 200)}`,
         issues: ['AI analysis failed'],
+        skipped: true,
       };
     }
     return JSON.parse(jsonMatch[0]) as AnalysisResult;
@@ -90,6 +107,7 @@ Respond ONLY with valid JSON in this exact format, no markdown fences:
       confidence: 'low',
       evidence: `AI service error: ${message.slice(0, 300)} [${keyHint}, model=${MODEL}]`,
       issues: [`AI check skipped: ${message.slice(0, 200)}`],
+      skipped: true,
     };
   }
 }

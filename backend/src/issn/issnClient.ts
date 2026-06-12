@@ -4,6 +4,8 @@ export interface IssnLookupResult {
   valid: boolean;
   registeredTitle: string;
   issn: string;
+  /** True when issn.org could not be reached — validity is unknown, not refuted. */
+  lookupFailed?: boolean;
 }
 
 /**
@@ -68,7 +70,12 @@ export async function lookupIssn(issn: string): Promise<IssnLookupResult> {
       registeredTitle: cleaned,
       issn: formatted,
     };
-  } catch {
-    return { valid: false, registeredTitle: '', issn: formatted };
+  } catch (err) {
+    if (axios.isAxiosError(err) && err.response && err.response.status < 500) {
+      return { valid: false, registeredTitle: '', issn: cleanIssn };
+    }
+    const message = err instanceof Error ? err.message : String(err);
+    console.warn(`ISSN lookup failed for ${cleanIssn}: ${message.slice(0, 200)}`);
+    return { valid: false, registeredTitle: '', issn: cleanIssn, lookupFailed: true };
   }
 }

@@ -2,6 +2,7 @@ import { scrapeUrl } from '../scraper/pageScraper';
 import { lookupIssn } from '../issn/issnClient';
 import type { AboutData } from '../types/formData';
 import type { ReportItem } from '../types/report';
+import { describeAccessFailure } from './shared';
 
 export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
@@ -17,18 +18,26 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
     });
   } else {
     const scraped = await scrapeUrl(data.homepageUrl);
-    results.push({
-      section: 'About',
-      field: 'homepageUrl',
-      status: scraped.accessible ? 'pass' : 'warning',
-      message: scraped.accessible
-        ? 'Journal homepage is accessible.'
-        : `Could not access homepage ${data.homepageUrl} from our servers (may be geo-restricted).`,
-      suggestion: scraped.accessible
-        ? ''
-        : 'We could not verify this URL from our servers. Please manually confirm the page is publicly accessible without login.',
-      url: data.homepageUrl,
-    });
+    if (scraped.accessible) {
+      results.push({
+        section: 'About',
+        field: 'homepageUrl',
+        status: 'pass',
+        message: 'Journal homepage is accessible.',
+        suggestion: '',
+        url: data.homepageUrl,
+      });
+    } else {
+      const failure = describeAccessFailure(data.homepageUrl, scraped);
+      results.push({
+        section: 'About',
+        field: 'homepageUrl',
+        status: scraped.errorType === 'timeout' ? 'warning' : 'fail',
+        message: failure.message,
+        suggestion: failure.suggestion,
+        url: data.homepageUrl,
+      });
+    }
   }
 
   // Check 2: At least one ISSN must be provided
@@ -51,13 +60,17 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
     results.push({
       section: 'About',
       field: fieldName,
-      status: lookup.valid ? 'pass' : 'fail',
+      status: lookup.valid ? 'pass' : lookup.lookupFailed ? 'warning' : 'fail',
       message: lookup.valid
         ? `ISSN ${issnToCheck} is registered at issn.org as "${lookup.registeredTitle}".`
-        : `ISSN ${issnToCheck} is not confirmed at issn.org.`,
+        : lookup.lookupFailed
+          ? `ISSN ${issnToCheck} could not be verified: issn.org did not respond. This does not mean the ISSN is invalid.`
+          : `ISSN ${issnToCheck} is not confirmed at issn.org.`,
       suggestion: lookup.valid
         ? ''
-        : 'Register your ISSN at issn.org and ensure it is confirmed before applying. The journal name must match what is shown at issn.org.',
+        : lookup.lookupFailed
+          ? 'Re-run the assessment later, or check the ISSN manually at https://portal.issn.org.'
+          : 'Register your ISSN at issn.org and ensure it is confirmed before applying. The journal name must match what is shown at issn.org.',
     });
 
     // Check 3: Title match (warning if ISSN found but title differs significantly)
