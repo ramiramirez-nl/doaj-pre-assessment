@@ -14,5 +14,5 @@ services:
       - key: OPENAI_BASE_URL
         value: https://api.freemodel.dev/v1
       - key: AI_MODEL
-        value: gpt-5.4-mini
+        value: gpt-4o-mini
     healthCheckPath: /health
