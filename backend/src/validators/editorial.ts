@@ -1,5 +1,5 @@
 import { scrapeUrl } from '../scraper/pageScraper';
-import { analyzePageContent } from '../ai/geminiClient';
+import { analyzePageContent } from '../ai/aiClient';
 import type { EditorialData } from '../types/formData';
 import type { ReportItem } from '../types/report';
 import { describeAccessFailure } from './shared';
@@ -9,7 +9,8 @@ async function checkUrl(
   section: string,
   field: string,
   aiCriteria: string,
-  failSuggestion: string
+  failSuggestion: string,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
   if (!url) {
@@ -39,6 +40,7 @@ async function checkUrl(
     pageText: scraped.text,
     criteria: aiCriteria,
     url,
+    language,
   });
   results.push({
     section,
@@ -60,7 +62,8 @@ async function checkUrl(
 }
 
 export async function validateEditorial(
-  data: EditorialData
+  data: EditorialData,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
 
@@ -90,7 +93,8 @@ export async function validateEditorial(
     'Editorial',
     'peerReviewPolicyUrl',
     'Does this page clearly describe the peer review process, including the type of review and that at least two independent reviewers evaluate each article?',
-    'Add a clear peer review policy page. It must state the review type and confirm at least two independent reviewers per article.'
+    'Add a clear peer review policy page. It must state the review type and confirm at least two independent reviewers per article.',
+    language
   );
   results.push(...prResults);
 
@@ -100,7 +104,8 @@ export async function validateEditorial(
     'Editorial',
     'editorialBoardUrl',
     'Does this page list at least 5 editors with their names and institutional affiliations?',
-    'The editorial board page must list all members with name and institutional affiliation. Minimum 5 editors recommended, ideally from different institutions.'
+    'The editorial board page must list all members with name and institutional affiliation. Minimum 5 editors recommended, ideally from different institutions.',
+    language
   );
   results.push(...boardResults);
 
@@ -110,7 +115,8 @@ export async function validateEditorial(
     'Editorial',
     'aimsAndScopeUrl',
     'Does this page describe the journal\'s aims and scope clearly?',
-    'Add an Aims & Scope page that clearly describes what subject areas the journal covers.'
+    'Add an Aims & Scope page that clearly describes what subject areas the journal covers.',
+    language
   );
   results.push(...aimsResults);
 
@@ -120,7 +126,8 @@ export async function validateEditorial(
     'Editorial',
     'instructionsForAuthorsUrl',
     'Does this page provide instructions for authors on how to submit articles?',
-    'Add an Instructions for Authors page with submission guidelines.'
+    'Add an Instructions for Authors page with submission guidelines.',
+    language
   );
   results.push(...instructionsResults);
 

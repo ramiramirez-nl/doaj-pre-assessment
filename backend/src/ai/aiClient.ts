@@ -22,6 +22,7 @@ export interface AnalysisInput {
   pageText: string;
   criteria: string;
   url: string;
+  language?: string;
 }
 
 export interface AnalysisResult {
@@ -50,12 +51,17 @@ export async function analyzePageContent(
     };
   }
 
+  const langInstruction =
+    input.language && input.language !== 'en'
+      ? `\nIMPORTANT: Write the "evidence" and "issues" fields in the language identified by ISO 639-1 code "${input.language}". Do NOT translate the JSON keys, only the values.`
+      : '';
+
   const prompt = `You are a DOAJ (Directory of Open Access Journals) compliance checker.
 
 Analyze the following webpage content and check if it meets this criterion:
 CRITERION: ${input.criteria}
 URL: ${input.url}
-
+${langInstruction}
 PAGE CONTENT (first 3000 chars):
 ${input.pageText.slice(0, 3000)}
 

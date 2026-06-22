@@ -1,11 +1,12 @@
 import { scrapeUrl } from '../scraper/pageScraper';
-import { analyzePageContent } from '../ai/geminiClient';
+import { analyzePageContent } from '../ai/aiClient';
 import type { OpenAccessData } from '../types/formData';
 import type { ReportItem } from '../types/report';
 import { describeAccessFailure } from './shared';
 
 export async function validateOpenAccess(
-  data: OpenAccessData
+  data: OpenAccessData,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
 
@@ -83,6 +84,7 @@ export async function validateOpenAccess(
     criteria:
       'Does this page contain an open access statement that explicitly states the journal provides immediate free access to all content under an open license (Creative Commons or equivalent)?',
     url: data.openAccessStatementUrl,
+    language,
   });
 
   results.push({

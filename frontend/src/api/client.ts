@@ -1,4 +1,5 @@
 import type { FormData, ReportResponse } from '../types/form.types';
+import i18n from '../i18n';
 
 export async function submitAssessment(
   formData: FormData
@@ -6,7 +7,7 @@ export async function submitAssessment(
   const response = await fetch('/api/assess', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData),
+    body: JSON.stringify({ ...formData, language: i18n.language }),
   });
 
   if (!response.ok) {

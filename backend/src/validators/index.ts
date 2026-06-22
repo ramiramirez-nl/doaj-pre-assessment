@@ -19,14 +19,15 @@ const SECTION_NAMES = [
 ];
 
 export async function runAllValidations(
-  formData: FormData
+  formData: FormData,
+  language?: string
 ): Promise<ReportResponse> {
   const settled = await Promise.allSettled([
-    validateOpenAccess(formData.openAccess),
+    validateOpenAccess(formData.openAccess, language),
     validateAbout(formData.about),
-    validateEditorial(formData.editorial),
-    validateCopyright(formData.copyright),
-    validateEthics(formData.ethics),
+    validateEditorial(formData.editorial, language),
+    validateCopyright(formData.copyright, language),
+    validateEthics(formData.ethics, language),
     validateBusinessModel(formData.businessModel),
     validateBestPractice(formData.bestPractice),
   ]);

@@ -1,5 +1,5 @@
 import { scrapeUrl } from '../scraper/pageScraper';
-import { analyzePageContent } from '../ai/geminiClient';
+import { analyzePageContent } from '../ai/aiClient';
 import type { CopyrightData } from '../types/formData';
 import type { ReportItem } from '../types/report';
 
@@ -15,7 +15,8 @@ const ACCEPTED_LICENSES = [
 ];
 
 export async function validateCopyright(
-  data: CopyrightData
+  data: CopyrightData,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
 
@@ -83,6 +84,7 @@ export async function validateCopyright(
         criteria:
           'Does this page clearly state the Creative Commons (or equivalent open) license under which the journal publishes articles?',
         url: data.licenseInfoUrl,
+        language,
       });
       results.push({
         section: 'Copyright',

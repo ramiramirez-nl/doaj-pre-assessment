@@ -7,7 +7,7 @@ import fs from 'fs';
 import 'dotenv/config';
 import type { FormData } from './types/formData';
 import { runAllValidations } from './validators/index';
-import { isAiConfigured } from './ai/geminiClient';
+import { isAiConfigured } from './ai/aiClient';
 
 // Overall budget for one assessment: 7 page scrapes (15s timeout each, run in
 // 3 parallel groups) plus up to 6 AI calls. 150s leaves headroom without
@@ -42,9 +42,11 @@ app.post('/api/assess', assessLimiter, async (req, res) => {
     return;
   }
 
+  const language = typeof req.body.language === 'string' ? req.body.language : undefined;
+
   try {
     const report = await Promise.race([
-      runAllValidations(formData as FormData),
+      runAllValidations(formData as FormData, language),
       new Promise<never>((_resolve, reject) =>
         setTimeout(() => reject(new Error('assessment timed out')), ASSESSMENT_TIMEOUT_MS)
       ),

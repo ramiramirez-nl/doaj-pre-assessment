@@ -1,10 +1,11 @@
 import { scrapeUrl } from '../scraper/pageScraper';
-import { analyzePageContent } from '../ai/geminiClient';
+import { analyzePageContent } from '../ai/aiClient';
 import type { EthicsData } from '../types/formData';
 import type { ReportItem } from '../types/report';
 
 export async function validateEthics(
-  data: EthicsData
+  data: EthicsData,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
 
@@ -36,6 +37,7 @@ export async function validateEthics(
         criteria:
           'Does this page contain a publication ethics or malpractice statement? It should address at least some of: plagiarism policy, authorship standards, duplicate publication, data fabrication/falsification, conflicts of interest, or adoption of recognised ethics guidelines (e.g. COPE).',
         url: data.publicationEthicsUrl,
+        language,
       });
       results.push({
         section: 'Ethics',
