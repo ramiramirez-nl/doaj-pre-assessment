@@ -8,6 +8,12 @@ export interface ReportItem {
   message: string;
   suggestion: string;
   url?: string;
+  /** Link to the relevant DOAJ guidance page for this check. */
+  criteriaUrl?: string;
+  /** Confidence of the AI content check, when one ran. */
+  confidence?: 'high' | 'medium' | 'low';
+  /** Evidence quote from the AI content check, when one ran. */
+  evidence?: string;
 }
 
 export interface ReportResponse {

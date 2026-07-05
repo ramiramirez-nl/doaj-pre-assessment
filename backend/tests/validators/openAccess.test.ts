@@ -3,12 +3,12 @@ import { describe, it, expect, vi } from 'vitest';
 vi.mock('../../src/scraper/pageScraper', () => ({
   scrapeUrl: vi.fn(),
 }));
-vi.mock('../../src/ai/geminiClient', () => ({
+vi.mock('../../src/ai/aiClient', () => ({
   analyzePageContent: vi.fn(),
 }));
 
 import { scrapeUrl } from '../../src/scraper/pageScraper';
-import { analyzePageContent } from '../../src/ai/geminiClient';
+import { analyzePageContent } from '../../src/ai/aiClient';
 import { validateOpenAccess } from '../../src/validators/openAccess';
 import type { OpenAccessData } from '../../src/types/formData';
 
@@ -29,6 +29,7 @@ describe('validateOpenAccess', () => {
 
     const data: OpenAccessData = {
       adheresToDefinition: true,
+      hasNoEmbargo: true,
       openAccessStatementUrl: 'https://example.com/oa',
       licenseStartDate: '2023-01',
     };
@@ -40,6 +41,7 @@ describe('validateOpenAccess', () => {
   it('fails when user says No to OA definition', async () => {
     const data: OpenAccessData = {
       adheresToDefinition: false,
+      hasNoEmbargo: true,
       openAccessStatementUrl: '',
       licenseStartDate: '',
     };
@@ -59,6 +61,7 @@ describe('validateOpenAccess', () => {
 
     const data: OpenAccessData = {
       adheresToDefinition: true,
+      hasNoEmbargo: true,
       openAccessStatementUrl: 'https://broken.example.com/oa',
       licenseStartDate: '2023-01',
     };

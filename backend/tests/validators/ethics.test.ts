@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { validateEthics } from '../../src/validators/ethics';
 import * as scraper from '../../src/scraper/pageScraper';
-import * as ai from '../../src/ai/geminiClient';
+import * as ai from '../../src/ai/aiClient';
 
 vi.mock('../../src/scraper/pageScraper');
-vi.mock('../../src/ai/geminiClient');
+vi.mock('../../src/ai/aiClient');
 
 describe('validateEthics', () => {
   it('fails if publication ethics URL is missing', async () => {

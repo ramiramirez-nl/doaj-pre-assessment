@@ -50,6 +50,8 @@ export async function validateEthics(
           ? ''
           : 'Add a clear publication ethics statement. Consider adopting COPE guidelines (publicationethics.org) and referencing them on this page.',
         url: data.publicationEthicsUrl,
+        confidence: analysis.skipped ? undefined : analysis.confidence,
+        evidence: analysis.skipped ? undefined : analysis.evidence,
       });
     }
   }

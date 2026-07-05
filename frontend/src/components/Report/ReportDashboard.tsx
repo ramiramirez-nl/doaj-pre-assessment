@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { ReportResponse, ReportItem } from '../../types/form.types';
 import { SummaryBanner } from './SummaryBanner';
 import { IssueCard } from './IssueCard';
+import { downloadReportHtml } from '../../utils/exportReport';
 
 interface Props {
   report: ReportResponse;
@@ -23,7 +24,7 @@ function buildPlainText(report: ReportResponse, lang: string, t: (key: string) =
     ...all.map(
       (i) =>
         `[${i.status.toUpperCase()}] ${i.section} / ${i.field}\n  ${i.message}${
-          i.suggestion ? '\n  Suggestion: ' + i.suggestion : ''
+          i.suggestion ? '\n  ' + t('report.suggestionLabel') + ' ' + i.suggestion : ''
         }${i.url ? '\n  URL: ' + i.url : ''}`,
     ),
     '',
@@ -96,16 +97,16 @@ export function ReportDashboard({ report, onReset, onBack }: Props) {
           >
             <span>{showPasses ? '▼' : '▶'}</span>
             <span>
-              {showPasses ? 'Hide' : 'Show'} {passes.length} passed checks
+              {t(showPasses ? 'report.hidePassedChecks' : 'report.showPassedChecks', {
+                count: passes.length,
+              })}
             </span>
           </button>
-          {(showPasses || typeof window !== 'undefined') && (
-            <div className={`space-y-2 ${showPasses ? '' : 'hidden print:block'}`}>
-              {passes.map((item, idx) => (
-                <PassCard key={`pass-${item.section}-${item.field}-${idx}`} item={item} />
-              ))}
-            </div>
-          )}
+          <div className={`space-y-2 ${showPasses ? '' : 'hidden print:block'}`}>
+            {passes.map((item, idx) => (
+              <PassCard key={`pass-${item.section}-${item.field}-${idx}`} item={item} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -134,6 +135,13 @@ export function ReportDashboard({ report, onReset, onBack }: Props) {
           className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50"
         >
           {t('report.printSavePdf')}
+        </button>
+        <button
+          type="button"
+          onClick={() => downloadReportHtml(report, i18n.language, t)}
+          className="rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-700 ring-1 ring-gray-300 hover:bg-gray-50"
+        >
+          {t('report.downloadHtml')}
         </button>
         <button
           type="button"

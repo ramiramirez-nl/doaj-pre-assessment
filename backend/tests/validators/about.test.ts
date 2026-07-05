@@ -6,7 +6,7 @@ vi.mock('../../src/scraper/pageScraper', () => ({
 vi.mock('../../src/issn/issnClient', () => ({
   lookupIssn: vi.fn(),
 }));
-vi.mock('../../src/ai/geminiClient', () => ({
+vi.mock('../../src/ai/aiClient', () => ({
   analyzePageContent: vi.fn(),
 }));
 

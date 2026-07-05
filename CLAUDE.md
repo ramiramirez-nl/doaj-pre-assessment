@@ -24,7 +24,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Backend
 - **Express.js** with TypeScript
-- **Gemini API** (Google's generative AI) for content analysis and verification
+- **OpenAI-compatible chat completions API** (default: freemodel.dev, model `gpt-4o-mini`) for content analysis and verification
+- **Zod** for request body validation
 - **Cheerio** for HTML parsing
 - **Axios** for HTTP requests (replaced Puppeteer—Render free tier can't run headless Chrome)
 - **Helmet** for security headers
@@ -50,13 +51,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Data Flow
 1. **Frontend** collects form data across 7 steps, validates locally with React Hook Form
-2. **User submits** → `POST /api/assess` with complete FormData
-3. **Backend** validates each section in parallel:
-   - Runs all 6 validators concurrently: `Promise.all([validateOpenAccess(...), validateAbout(...), ...])`
-   - Each validator checks links, scrapes content, calls Gemini API for AI analysis
-   - Returns array of `ReportItem[]` with status (pass/fail/warning)
+2. **User submits** → `POST /api/assess` with complete FormData. If the client sends `Accept: text/event-stream`, the response streams `start`/`section`/`done`/`error` SSE events as each validator finishes; otherwise it returns the same payload as one JSON response (see `frontend/src/api/sse.ts` and `backend/src/types/events.ts`)
+3. **Backend** validates the request body with a Zod schema (`backend/src/schemas/formData.ts`), then runs all 7 section validators in parallel:
+   - `runAllValidations()` in `backend/src/validators/index.ts` decorates each validator's result with a DOAJ guidance link (`criteriaLinks.ts`) and emits it as soon as it settles
+   - Each validator checks links, scrapes content, calls the AI client for content analysis
+   - Returns array of `ReportItem[]` with status (pass/fail/warning), plus optional `confidence`/`evidence` from AI checks and a `criteriaUrl`
 4. **Report aggregation** combines results, calculates overall status, identifies issues
-5. **Frontend displays** ReportDashboard with passed/failed checks and suggestions
+5. **Frontend displays** ReportDashboard with passed/failed checks, suggestions, confidence badges, and criteria links
 
 ### Validator Pattern
 Each validator module (`backend/src/validators/*.ts`) follows this pattern:
@@ -116,8 +117,9 @@ npx vitest backend/src/validators/openAccess.test.ts
 Backend requires:
 ```bash
 # backend/.env (not in git)
-GEMINI_API_KEY=sk-...
-GEMINI_MODEL=gemini-2.0-flash  (or latest)
+OPENAI_API_KEY=sk-...
+OPENAI_BASE_URL=https://api.freemodel.dev/v1
+AI_MODEL=gpt-4o-mini
 PORT=3001
 NODE_ENV=development
 ```
@@ -133,40 +135,48 @@ All form sections map to TypeScript interfaces in `backend/src/types/formData.ts
 - React Hook Form uses `FormData` as generic parameter
 
 ### 2. Validator Orchestration
-- `backend/src/validators/index.ts` imports 6 validators
-- `runAllValidations()` executes all in parallel, combines results
+- `backend/src/validators/index.ts` imports 7 validators (Open Access, About, Editorial, Copyright, Ethics, Business Model, Best Practice)
+- `runAllValidations()` executes all in parallel; each validator's promise settles independently and can be streamed via an optional `onSection` callback (used by the SSE path)
 - Overall status: `fail` if any fail, `warning` if any warning, otherwise `pass`
 - Issues list filters to non-pass items for ReportDashboard
+- Retry: `backend/src/utils/retry.ts` retries transient scraper/AI/ISSN failures once with backoff
+- Caching: `backend/src/utils/ttlCache.ts` backs 24h in-memory caches in `pageScraper.ts`, `aiClient.ts`, and `issnClient.ts` (single-instance deployment, no external cache needed)
 
 ### 3. URL Validation & Scraping
-- **pageScraper.ts** fetches URL, returns `{ accessible, content, statusCode }`
+- **pageScraper.ts** fetches URL, returns `{ accessible, text, links, statusCode, errorType }`
 - Runs with real Chrome User-Agent (journal sites often geo-block or reject bots)
 - Axios (not Puppeteer) because Render free tier can't run headless browsers
-- Timeouts: 10s fetch timeout, 5s parse timeout
+- SSRF protection: `validatePublicUrl()` blocks private/internal targets on both the initial request and every redirect hop (`beforeRedirect`)
+- Timeouts: 15s fetch timeout; one retry on transient failure
 
 ### 4. AI Content Analysis
-- **geminiClient.ts** prompts Gemini with page content + validation question
-- Example: "Does this page contain a CC license statement? Return only YES or NO"
-- Gemini responses are parsed strictly; failures return `{ error: string }`
+- **aiClient.ts** (`backend/src/ai/aiClient.ts`) sends an OpenAI-compatible chat completion request with page content + validation criteria
+- Response is parsed as JSON and validated against the expected shape (`found`, `confidence`, `evidence`, `issues`) before use; malformed responses degrade to a skipped/warning result
+- One retry on timeout/429/5xx; successful analyses are cached for 24h
 - Cost: ~1-2 API calls per validation run (reuses scraped content)
 
 ### 5. ISSN Verification
-- **issnClient.ts** calls issn.org REST API
-- Returns metadata: publisher, status, online/print classification
-- Used in "About" validator to verify ISSN is registered and valid
+- **issnClient.ts** calls portal.issn.org and parses the HTML `<title>`
+- Returns metadata: registered title, validity, whether the lookup itself failed (vs. a confirmed invalid ISSN)
+- Used in "About" validator to verify ISSN is registered and the title roughly matches
 
 ### 6. Internationalization (i18n)
-- i18next manages TR/EN translations
-- Translation files: `frontend/src/i18n/locales/tr.json`, `en.json` (not in repo—use i18n.ts)
+- i18next manages 8 languages: en, tr, de, es, fr, ar, id, zh (`frontend/src/i18n/*.json`)
 - Keys follow path-based naming: `app.title`, `steps.openAccess`, `nav.next`
+- `frontend/src/i18n/keys.test.ts` asserts all locales have exactly the same key set as `en.json`
 - Language selector in header switches app-wide
 
 ### 7. Report Dashboard
-- **ReportDashboard.tsx** displays final report
+- **ReportDashboard.tsx** displays final report; "Print / Save as PDF" and "Download HTML" (self-contained, RTL-aware) export options
 - **SummaryBanner** shows totals: X passed, Y failed, Z warnings, overall status color
-- **IssueCard** renders each failed/warning check with message + suggestion
-- Passed checks collapsed/toggled with "Show passed checks" button
+- **IssueCard** renders each check with message, suggestion, AI confidence badge + evidence quote (when available), and a link to the relevant DOAJ criteria page
+- Passed checks collapsed/toggled with "Show/Hide N passed checks" button
 - "Back to Review" button allows user to return to step 7 to edit answers
+
+### 8. Live Progress (SSE)
+- `frontend/src/api/client.ts` → `submitAssessmentStream()` requests `Accept: text/event-stream` on `POST /api/assess`
+- `AssessmentProgress.tsx` renders a real per-section checklist (pending → checking → pass/warning/fail) driven by the streamed `section` events, instead of a time-based heuristic
+- Falls back to a single JSON response automatically for any client that doesn't send the SSE `Accept` header
 
 ## Database & State Management
 
@@ -205,8 +215,8 @@ Keep files under 400 lines. Current structure:
 
 ## Security & Secrets
 
-- **GEMINI_API_KEY** must be in backend/.env (never committed)
-- Backend receives form input → must validate before scraping (prevent URL-based attacks)
+- **OPENAI_API_KEY** must be in backend/.env (never committed)
+- Backend validates the request body with Zod, then must validate URLs before scraping (SSRF protection in `pageScraper.ts` covers private IP ranges, non-http protocols, and redirect targets)
 - Helmet enabled for security headers
 - CORS configured to allow frontend origin
 - AI analysis uses page content, not user input directly (safer)
@@ -217,30 +227,32 @@ Keep files under 400 lines. Current structure:
 - Build command: `npm run build` (root)
 - Start command: `node backend/dist/index.js` (serves frontend static + API)
 - Health check: `GET /health` returns `{ status: 'ok' }`
-- Environment: Set `GEMINI_API_KEY` in Render dashboard (not in render.yaml, marked `sync: false`)
+- Environment: `OPENAI_API_KEY` set in Render dashboard (not in render.yaml, marked `sync: false`); `OPENAI_BASE_URL` and `AI_MODEL` are set directly in `render.yaml`
 
 ## Testing Strategy
 
-- Unit tests for validators (mock Gemini responses)
-- Integration tests for `/api/assess` endpoint (supertest)
+- Unit tests for validators (mock the AI client/scraper), utils (`retry.ts`, `ttlCache.ts`), and the SSRF allow/block list
+- Integration tests for `/api/assess`, covering both the plain-JSON and SSE response paths (supertest)
+- `frontend/src/i18n/keys.test.ts` guards translation key parity across all 8 locales
 - E2E tests could use Playwright (not yet implemented)
-- Currently: `npm test` in backend runs Vitest suite
+- `npm run typecheck && npm test` in both `backend/` and `frontend/`; CI runs both on push/PR (`.github/workflows/ci.yml`)
 
 ## Performance Notes
 
 - Form validation happens client-side (React Hook Form) before submit
-- Backend validation is parallel (all 6 validators run concurrently)
-- URL scraping bottleneck: ~2-5s per journal depending on site speed + Gemini latency
-- Total assessment time: 10-20 seconds typical (mostly Gemini API + scraping)
+- Backend validation is parallel (all 7 validators run concurrently); results stream to the client via SSE as each one settles
+- Scrape, AI, and ISSN results are cached in-memory for 24h, so repeat submissions for the same journal are fast
+- Total assessment time: typically well under the 150s server-side budget (mostly AI latency + scraping)
 
 ## Known Limitations & Future Work
 
-- No draft saving (each session starts fresh)
+- No draft saving beyond the browser (localStorage-based autosave exists; no server-side persistence)
 - No user feedback collection (one-way assessment)
-- Report not exportable (HTML/PDF export not implemented)
-- Gemini API costs scale with usage (consider caching for repeat submissions)
+- HTML export and print-to-PDF are implemented; no server-rendered PDF generation
+- AI API costs scale with usage (mitigated by the 24h result cache)
 - No admin panel (form and criteria are hardcoded)
 - AI content analysis is best-effort (may miss non-English statements or malformed pages)
+- SSE has no reconnect/resume on dropped connections — the client must resubmit (cheap thanks to caching)
 
 ## Related Files & References
 
@@ -252,4 +264,4 @@ Keep files under 400 lines. Current structure:
 
 ---
 
-*Last updated: 2026-04-28. Reflects commit 22bc608.*
+*Last updated: 2026-07-05.*

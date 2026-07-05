@@ -73,14 +73,18 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
           : 'Register your ISSN at issn.org and ensure it is confirmed before applying. The journal name must match what is shown at issn.org.',
     });
 
-    // Check 3: Title match (warning if ISSN found but title differs significantly)
-    if (
-      lookup.valid &&
-      lookup.registeredTitle &&
-      !lookup.registeredTitle
-        .toLowerCase()
-        .includes(data.journalTitle.toLowerCase().slice(0, 5))
-    ) {
+    // Check 3: Title match (warning if ISSN found but title differs significantly).
+    // Compare normalized full titles both ways — issn.org often appends
+    // qualifiers like "(Online)" to the registered title.
+    const normalizeTitle = (s: string) =>
+      s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+    const registeredNorm = normalizeTitle(lookup.registeredTitle ?? '');
+    const providedNorm = normalizeTitle(data.journalTitle ?? '');
+    const titlesMatch =
+      registeredNorm.length > 0 &&
+      providedNorm.length > 0 &&
+      (registeredNorm.includes(providedNorm) || providedNorm.includes(registeredNorm));
+    if (lookup.valid && lookup.registeredTitle && !titlesMatch) {
       results.push({
         section: 'About',
         field: 'journalTitle',

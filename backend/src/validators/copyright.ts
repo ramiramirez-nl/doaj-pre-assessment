@@ -31,10 +31,17 @@ export async function validateCopyright(
         'DOAJ requires journals to apply a Creative Commons license (or equivalent open license) to all published content. Select at least one CC license (CC BY recommended).',
     });
   } else {
+    // Exact match on a flattened form ("CC BY-NC 4.0" -> "CCBYNC") so that
+    // substring overlaps (every CC variant contains "BY") cannot produce
+    // false positives, while spacing/hyphen/version variants still match.
+    const flattenLicense = (s: string) =>
+      s
+        .toUpperCase()
+        .replace(/\s*\d+(\.\d+)?\s*$/, '') // strip trailing version like "4.0"
+        .replace(/[^A-Z0-9]/g, '');
+    const acceptedFlat = new Set(ACCEPTED_LICENSES.map(flattenLicense));
     const hasAcceptedLicense = data.licenses.some((lic) =>
-      ACCEPTED_LICENSES.some((accepted) =>
-        lic.toUpperCase().includes(accepted.toUpperCase().replace('CC ', ''))
-      )
+      acceptedFlat.has(flattenLicense(lic))
     );
     if (hasAcceptedLicense) {
       results.push({
@@ -97,6 +104,8 @@ export async function validateCopyright(
           ? ''
           : 'Update the page to explicitly name the Creative Commons license used (e.g. "All articles are published under CC BY 4.0").',
         url: data.licenseInfoUrl,
+        confidence: analysis.skipped ? undefined : analysis.confidence,
+        evidence: analysis.skipped ? undefined : analysis.evidence,
       });
     }
   }

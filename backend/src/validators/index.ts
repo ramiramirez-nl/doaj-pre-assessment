@@ -7,8 +7,9 @@ import { validateCopyright } from './copyright';
 import { validateEthics } from './ethics';
 import { validateBusinessModel } from './businessModel';
 import { validateBestPractice } from './bestPractice';
+import { criteriaUrlFor } from './criteriaLinks';
 
-const SECTION_NAMES = [
+export const SECTION_NAMES = [
   'Open Access',
   'About',
   'Editorial',
@@ -18,11 +19,18 @@ const SECTION_NAMES = [
   'Best Practice',
 ];
 
+export interface SectionResult {
+  section: string;
+  index: number;
+  items: ReportItem[];
+}
+
 export async function runAllValidations(
   formData: FormData,
-  language?: string
+  language?: string,
+  onSection?: (result: SectionResult) => void
 ): Promise<ReportResponse> {
-  const settled = await Promise.allSettled([
+  const validators: Array<Promise<ReportItem[]>> = [
     validateOpenAccess(formData.openAccess, language),
     validateAbout(formData.about),
     validateEditorial(formData.editorial, language),
@@ -30,26 +38,45 @@ export async function runAllValidations(
     validateEthics(formData.ethics, language),
     validateBusinessModel(formData.businessModel),
     validateBestPractice(formData.bestPractice),
-  ]);
+  ];
 
-  const allResults: ReportItem[] = [];
-  settled.forEach((result, i) => {
-    if (result.status === 'fulfilled') {
-      allResults.push(...result.value);
-    } else {
-      const reason = result.reason instanceof Error
-        ? result.reason.message
-        : String(result.reason);
-      console.error(`[validator] ${SECTION_NAMES[i]} crashed:`, reason);
-      allResults.push({
-        section: SECTION_NAMES[i],
-        field: 'validation',
-        status: 'warning',
-        message: 'Validation for this section could not complete due to an unexpected error.',
-        suggestion: 'Please check the information in this section and try again.',
-      });
-    }
-  });
+  // Each validator is wrapped so its result is decorated and emitted the
+  // moment it settles (live progress via SSE); a crash degrades to a single
+  // warning item instead of failing the whole assessment.
+  const wrapped = validators.map((promise, i) =>
+    promise
+      .then(
+        (items) => items,
+        (reason): ReportItem[] => {
+          const message =
+            reason instanceof Error ? reason.message : String(reason);
+          console.error(`[validator] ${SECTION_NAMES[i]} crashed:`, message);
+          return [
+            {
+              section: SECTION_NAMES[i],
+              field: 'validation',
+              status: 'warning',
+              message:
+                'Validation for this section could not complete due to an unexpected error.',
+              suggestion:
+                'Please check the information in this section and try again.',
+            },
+          ];
+        }
+      )
+      .then((items) => {
+        // Attach the relevant DOAJ guidance link in one place so individual
+        // validators stay focused on their own logic.
+        const decorated = items.map((item) => ({
+          ...item,
+          criteriaUrl: item.criteriaUrl ?? criteriaUrlFor(item.section),
+        }));
+        onSection?.({ section: SECTION_NAMES[i], index: i, items: decorated });
+        return decorated;
+      })
+  );
+
+  const allResults: ReportItem[] = (await Promise.all(wrapped)).flat();
 
   const failCount = allResults.filter((r) => r.status === 'fail').length;
   const warningCount = allResults.filter((r) => r.status === 'warning').length;

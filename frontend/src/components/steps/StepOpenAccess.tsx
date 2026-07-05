@@ -4,17 +4,18 @@ import type { FormData } from '../../types/form.types';
 import { LinkField } from '../LinkField';
 import { URL_PATTERN } from '../../utils/validation';
 
-const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
-];
+function useLocalizedMonths(locale: string): string[] {
+  const formatter = new Intl.DateTimeFormat(locale, { month: 'long' });
+  return Array.from({ length: 12 }, (_, i) => formatter.format(new Date(2000, i, 1)));
+}
 
 const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
 
 export function StepOpenAccess() {
   const { register, setValue, watch, formState: { errors } } = useFormContext<FormData>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const MONTHS = useLocalizedMonths(i18n.language);
 
   const stored = watch('openAccess.licenseStartDate') ?? '';
   // Parse stored "YYYY-MM" or "YYYY" or "YYYY-MM-DD"
@@ -56,7 +57,7 @@ export function StepOpenAccess() {
       <div>
         <label className="block text-sm font-medium text-gray-700">
           {t('step.openAccess.licenseStartDate')}{' '}
-          <span className="text-xs font-normal text-gray-400">(approximate, optional)</span>
+          <span className="text-xs font-normal text-gray-400">{t('step.openAccess.approxOptional')}</span>
         </label>
         <div className="mt-1 grid grid-cols-2 gap-2">
           <select
@@ -64,7 +65,7 @@ export function StepOpenAccess() {
             value={yearPart}
             onChange={(e) => updateDate(e.target.value, monthPart)}
           >
-            <option value="">— Year —</option>
+            <option value="">{t('step.openAccess.selectYear')}</option>
             {years.map((y) => (
               <option key={y} value={String(y)}>
                 {y}
@@ -77,7 +78,7 @@ export function StepOpenAccess() {
             onChange={(e) => updateDate(yearPart, e.target.value)}
             disabled={!yearPart}
           >
-            <option value="">— Month (optional) —</option>
+            <option value="">{t('step.openAccess.selectMonth')}</option>
             {MONTHS.map((m, i) => (
               <option key={m} value={String(i + 1).padStart(2, '0')}>
                 {m}

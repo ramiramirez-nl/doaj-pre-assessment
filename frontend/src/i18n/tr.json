@@ -6,7 +6,6 @@
   "nav.next": "İleri",
   "nav.submit": "Değerlendirmeyi Başlat",
   "nav.submitting": "Değerlendiriliyor…",
-
   "steps.openAccess": "Açık Erişim",
   "steps.about": "Hakkında",
   "steps.copyright": "Telif Hakkı",
@@ -15,14 +14,12 @@
   "steps.businessModel": "İş Modeli",
   "steps.bestPractice": "En İyi Uygulamalar",
   "steps.review": "İnceleme",
-
   "step.openAccess.title": "1. Açık Erişim Uyumu",
   "step.openAccess.adheresToDefinition": "Dergi, DOAJ'ın açık erişim tanımına uymaktadır.",
   "step.openAccess.hasNoEmbargo": "Makaleler yayımlandıktan hemen sonra açık erişime sunulmaktadır (ambargo yoktur).",
   "step.openAccess.statementUrl": "Açık erişim beyanı URL",
   "step.openAccess.statementHint": "Derginin açık erişim politikasını açıklayan genel sayfa.",
   "step.openAccess.licenseStartDate": "Lisans başlangıç tarihi",
-
   "step.about.title": "2. Dergi Hakkında",
   "step.about.journalTitle": "Dergi adı",
   "step.about.alternativeTitle": "Alternatif başlık",
@@ -36,7 +33,6 @@
   "step.about.languagesHint": "Derginin tam metin yayımladığı diller.",
   "step.about.publisherName": "Yayıncı adı",
   "step.about.publisherCountry": "Yayıncı ülkesi",
-
   "step.copyright.title": "3. Telif Hakkı & Lisanslama",
   "step.copyright.licensesUsed": "Derginin kullandığı lisanslar",
   "step.copyright.licenseInfoUrl": "Lisans bilgisi URL",
@@ -49,7 +45,6 @@
   "step.copyright.licenseConsistentOnArticlePages": "Makale sayfalarındaki lisans, site genelindeki lisans politikasıyla eşleşiyor.",
   "step.copyright.licenseConsistentInPdfs": "Makale PDF'lerindeki lisans metni, web sitesinin lisans politikasıyla eşleşiyor.",
   "step.copyright.noCopyrightConflicts": "Web sitesi, makale sayfaları ve PDF'ler arasında telif hakkı çelişkisi yok (açık lisans yanında 'Tüm hakları saklıdır' gibi ifadeler bulunmuyor).",
-
   "step.editorial.title": "4. Editoryal Süreç",
   "step.editorial.peerReviewTypes": "Hakemlik türleri",
   "step.editorial.peerReviewPolicyUrl": "Hakemlik politikası URL",
@@ -65,7 +60,6 @@
   "step.editorial.endogenyHint": "DOAJ kuralı: son iki sayıyı (ya da sürekli yayında son takvim yılını) sayın. Herhangi bir makalenin yazarı aynı zamanda editör, kurul üyesi veya hakem ise o makale 'iç' sayılır. Azami oran %25.",
   "step.editorial.articleDatesDisplayed": "Makale sayfaları gönderim, kabul ve/veya yayın tarihlerini göstermektedir.",
   "step.editorial.articleDatesHint": "DOAJ, her makale sayfasında bu üç tarihten en az ikisinin gösterilmesini önemle tavsiye eder. Bu, değerlendirme sürecinde incelenen bir şeffaflık göstergesidir.",
-
   "step.businessModel.title": "6. İş Modeli",
   "step.businessModel.chargesApc": "Dergi makale işlem ücreti (APC) almaktadır.",
   "step.businessModel.apcFees": "APC ücretleri",
@@ -79,7 +73,6 @@
   "step.businessModel.chargesOtherFees": "Dergi başka ücretler almaktadır (gönderim, yayın vb.).",
   "step.businessModel.otherFeesInfoUrl": "Diğer ücretler bilgi URL",
   "step.businessModel.otherFeesInfoHint": "Yazarlara yönelik tüm diğer ücretleri (gönderim ücreti, sayfa ücreti, renk baskı vb.) ve ne zaman uygulandığını listeleyen genel sayfa.",
-
   "step.ethics.title": "5. Etik & Araştırma Bütünlüğü",
   "step.ethics.description": "DOAJ, dergilerin araştırma bütünlüğü için açık politikalara sahip olmasını şart koşar. Eksik veya belirsiz etik politikalar sık görülen bir red sebebidir.",
   "step.ethics.publicationEthicsUrl": "Yayın etiği / kötüye kullanım beyanı URL",
@@ -92,14 +85,12 @@
   "step.ethics.misleadingMetricsTitle": "Standart dışı metrikler — DOAJ politikası",
   "step.ethics.misleadingMetricsExplain": "DOAJ, akademik camia tarafından tanınmayan ticari kayıtçılardan alınan metriklerin görüntülenmesini yasaklar. Örneğin: Global Impact Factor, SJIF (Bilimsel Dergi Etki Faktörü), ResearchBib IF, Universal Impact Factor, CIF, i-Factor ve benzerleri. Bunlar hakemli metrikler değildir ve yazarları yanıltır. Yalnızca tanınan hizmetlerden doğrulanabilir metrikleri gösterin: Web of Science Dergi Etki Faktörü (JIF), Scopus CiteScore, SCImago SJR veya SNIP.",
   "step.ethics.noMisleadingMetrics": "Dergi, tanınmayan ticari kayıtçılardan alınan standart dışı veya doğrulanamaz 'etki faktörlerini' GÖRÜNTÜLEMEMEKTEDIR.",
-
   "step.bestPractice.title": "7. En İyi Uygulamalar",
   "step.bestPractice.archivingServices": "Arşivleme hizmetleri",
   "step.bestPractice.repositoryPolicies": "Depo / kendi arşivleme politikaları",
   "step.bestPractice.persistentIdentifiers": "Kalıcı tanımlayıcılar",
   "step.bestPractice.articlesHaveDois": "Yayımlanan makalelerde DOI veya diğer kalıcı tanımlayıcılar bulunmaktadır.",
   "step.bestPractice.doisHint": "DOAJ tüm makaleler için DOI önerir. DOI'lar uzun vadeli kararlı bağlantılar sağlar ve başlıca dizinleme hizmetlerinin çoğu tarafından zorunlu tutulmaktadır.",
-
   "step.review.title": "8. İnceleme & Gönder",
   "step.review.description": "Aşağıdaki bilgileri inceleyin, ardından yapay zeka ön değerlendirmesini başlatmak için gönderin.",
   "step.review.openAccess": "Açık Erişim",
@@ -139,14 +130,10 @@
   "step.review.licenseConsistentOnArticlePages": "Makale sayfalarında lisans",
   "step.review.licenseConsistentInPdfs": "PDF'lerde lisans",
   "step.review.noCopyrightConflicts": "Telif çelişkisi yok",
-
   "linkField.openLink": "Bağlantıyı Aç",
-
   "report.doajDisclaimer": "Bu araç DOAJ ile bağlantılı değildir. Ön değerlendirmede olumlu sonuç alınması, resmi inceleme sürecinde kabulü garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve https://doaj.org/apply/guide/ adresindeki kılavuz doğrultusunda nihai kararı verecektir.",
-
   "chipInput.placeholder": "Yazın ve eklemek için Enter'a basın",
   "chipInput.remove": "{{item}} öğesini kaldır",
-
   "report.noIssues": "Sorun bulunamadı. Dergi, burada kontrol edilen DOAJ ön değerlendirme kriterlerini karşılıyor gibi görünmektedir.",
   "report.itemsNeedAttention_one": "{{count}} öğe dikkat gerektiriyor",
   "report.itemsNeedAttention_other": "{{count}} öğe dikkat gerektiriyor",
@@ -156,20 +143,16 @@
   "report.copied": "✓ Kopyalandı!",
   "report.printSavePdf": "Yazdır / PDF olarak kaydet",
   "report.newAssessment": "Yeni Değerlendirme",
-
   "summary.pass": "Muhtemelen DOAJ'a hazır",
   "summary.warning": "Dikkat gerekiyor",
   "summary.fail": "Henüz hazır değil",
   "summary.checksInfo": "{{passCount}} kontrol geçti · {{failCount}} sorun bulundu",
-
   "validation.required": "Bu alan zorunludur.",
   "validation.url": "http(s):// ile başlayan geçerli bir URL girin.",
   "validation.issn": "1234-5678 biçiminde geçerli bir ISSN girin.",
   "validation.issnRequired": "En az bir ISSN (basılı veya çevrimiçi) gereklidir.",
-
   "draft.restored": "Kaydedilmiş taslak geri yüklendi. İlerlemeniz otomatik olarak kaydedilir.",
   "draft.clear": "Taslağı temizle",
-
   "progress.title": "Değerlendirme çalışıyor…",
   "progress.phase.starting": "Değerlendirme hazırlanıyor…",
   "progress.phase.scraping": "Verdiğiniz sayfalar ziyaret edilip okunuyor…",
@@ -178,6 +161,24 @@
   "progress.phase.compiling": "Rapor derleniyor…",
   "progress.elapsed": "{{seconds}} sn geçti",
   "progress.note": "Bu işlem genellikle 1–2 dakika sürer. Lütfen bu sekmeyi açık tutun.",
-
-  "report.disclaimer": "Bu araç DOAJ ile ilişkili değildir. Ön değerlendirmede olumlu bir sonuç, resmi inceleme sürecinde kabul edileceğini garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve nihai kararı <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a> adresindeki kılavuza göre verecektir."
+  "report.disclaimer": "Bu araç DOAJ ile ilişkili değildir. Ön değerlendirmede olumlu bir sonuç, resmi inceleme sürecinde kabul edileceğini garanti etmez. DOAJ editoryal ekibi, resmi başvuruyu aldıktan sonra dergini inceleyecek ve nihai kararı <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a> adresindeki kılavuza göre verecektir.",
+  "report.suggestionLabel": "Öneri:",
+  "report.showPassedChecks_one": "{{count}} geçen kontrolü göster",
+  "report.showPassedChecks_other": "{{count}} geçen kontrolü göster",
+  "report.hidePassedChecks_one": "{{count}} geçen kontrolü gizle",
+  "report.hidePassedChecks_other": "{{count}} geçen kontrolü gizle",
+  "step.openAccess.selectYear": "— Yıl —",
+  "step.openAccess.selectMonth": "— Ay (opsiyonel) —",
+  "step.openAccess.approxOptional": "(yaklaşık, opsiyonel)",
+  "report.confidenceHigh": "Yüksek güven",
+  "report.confidenceMedium": "Orta güven",
+  "report.confidenceLow": "Düşük güven",
+  "report.viewCriteria": "DOAJ kriterini görüntüle",
+  "report.evidenceLabel": "Kanıt:",
+  "report.downloadHtml": "HTML olarak indir",
+  "progress.sectionStatus.pending": "Bekliyor",
+  "progress.sectionStatus.checking": "Kontrol ediliyor…",
+  "progress.sectionStatus.pass": "Geçti",
+  "progress.sectionStatus.warning": "Dikkat gerekiyor",
+  "progress.sectionStatus.fail": "Başarısız"
 }

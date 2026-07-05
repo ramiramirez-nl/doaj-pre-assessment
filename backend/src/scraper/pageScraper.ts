@@ -1,6 +1,8 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { URL } from 'url';
+import { withRetry } from '../utils/retry';
+import { TtlCache } from '../utils/ttlCache';
 
 export type ScrapeErrorType = 'timeout' | 'network' | 'http';
 
@@ -71,6 +73,14 @@ const REAL_BROWSER_HEADERS = {
 
 const MAX_RESPONSE_BYTES = 5 * 1024 * 1024;
 
+// Successful scrape results only — repeat submissions for the same journal
+// skip the network round-trip. 24h TTL, capped to bound memory.
+const scrapeCache = new TtlCache<ScrapeResult>(24 * 60 * 60 * 1000, 200);
+
+export function clearScrapeCache(): void {
+  scrapeCache.clear();
+}
+
 export async function scrapeUrl(url: string): Promise<ScrapeResult> {
   let safeUrl: string;
   try {
@@ -81,15 +91,34 @@ export async function scrapeUrl(url: string): Promise<ScrapeResult> {
     return { accessible: false, text: '', links: [], statusCode: 0, errorType: 'network' };
   }
 
+  const cached = scrapeCache.get(safeUrl);
+  if (cached) return cached;
+
   try {
-    const response = await axios.get(safeUrl, {
+    const doGet = () => axios.get(safeUrl, {
       headers: REAL_BROWSER_HEADERS,
-      timeout: 20000,
+      timeout: 15000,
       maxRedirects: 3,
+      // Re-validate every redirect target so a public URL cannot bounce the
+      // request into a private/internal address (SSRF via redirect).
+      beforeRedirect: (options: { protocol?: string; hostname?: string; path?: string; href?: string }) => {
+        const target =
+          options.href ?? `${options.protocol ?? 'http:'}//${options.hostname ?? ''}${options.path ?? ''}`;
+        validatePublicUrl(target);
+      },
       validateStatus: (status) => status < 500,
       responseType: 'text',
       maxContentLength: MAX_RESPONSE_BYTES,
       maxBodyLength: MAX_RESPONSE_BYTES,
+    });
+
+    // Retry once on transient failures (timeout / connection reset).
+    // HTTP 4xx resolves normally (validateStatus) so it is never retried;
+    // SSRF blocks throw non-retryable errors and fail fast.
+    const response = await withRetry(doGet, {
+      attempts: 2,
+      shouldRetry: (err) =>
+        err instanceof Error && !/not allowed|Blocked hostname|Invalid URL/i.test(err.message),
     });
 
     const statusCode = response.status;
@@ -109,7 +138,9 @@ export async function scrapeUrl(url: string): Promise<ScrapeResult> {
       if (href.startsWith('http')) links.push(href);
     });
 
-    return { accessible: true, text, links, statusCode };
+    const result: ScrapeResult = { accessible: true, text, links, statusCode };
+    scrapeCache.set(safeUrl, result);
+    return result;
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     const errorType: ScrapeErrorType =

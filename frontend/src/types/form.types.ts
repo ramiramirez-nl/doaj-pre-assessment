@@ -84,6 +84,9 @@ export interface ReportItem {
   message: string;
   suggestion: string;
   url?: string;
+  criteriaUrl?: string;
+  confidence?: 'high' | 'medium' | 'low';
+  evidence?: string;
 }
 
 export interface ReportResponse {

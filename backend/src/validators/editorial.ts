@@ -57,6 +57,8 @@ async function checkUrl(
         ? `Verify the page content manually. ${failSuggestion}`
         : failSuggestion,
     url,
+    confidence: analysis.skipped ? undefined : analysis.confidence,
+    evidence: analysis.skipped ? undefined : analysis.evidence,
   });
   return results;
 }

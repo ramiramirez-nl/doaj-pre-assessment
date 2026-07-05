@@ -1,12 +1,11 @@
 {
   "app.title": "Herramienta de Preevaluación DOAJ",
   "app.subtitle": "Autoevalúa tu revista con los criterios de solicitud de DOAJ antes de aplicar.",
-  "app.disclaimer": "<strong>Nota:</strong> Esta herramienta usa IA para analizar las URLs proporcionadas. Los resultados son indicativos y pueden contener errores — verifique de forma independiente antes de solicitar su admisión en DOAJ.",
+  "app.disclaimer": "Esta herramienta no está afiliada a DOAJ. Un resultado positivo en la evaluación previa no garantiza la aceptación en el proceso de revisión formal. El equipo editorial de DOAJ revisará su revista tras recibir la solicitud formal y tomará la decisión final siguiendo las directrices disponibles en <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline\">https://doaj.org/apply/guide/</a>.",
   "nav.back": "Atrás",
   "nav.next": "Siguiente",
   "nav.submit": "Ejecutar evaluación",
   "nav.submitting": "Evaluando…",
-
   "steps.openAccess": "Acceso Abierto",
   "steps.about": "Acerca de",
   "steps.copyright": "Derechos de autor",
@@ -15,14 +14,12 @@
   "steps.businessModel": "Modelo de negocio",
   "steps.bestPractice": "Buenas prácticas",
   "steps.review": "Revisión",
-
   "step.openAccess.title": "1. Cumplimiento de Acceso Abierto",
   "step.openAccess.adheresToDefinition": "La revista cumple con la definición de acceso abierto de DOAJ.",
   "step.openAccess.hasNoEmbargo": "Los artículos están disponibles en acceso abierto inmediatamente tras su publicación (sin período de embargo).",
   "step.openAccess.statementUrl": "URL de declaración de acceso abierto",
   "step.openAccess.statementHint": "Página pública que declara la política de acceso abierto de la revista.",
   "step.openAccess.licenseStartDate": "Fecha de inicio de licencia",
-
   "step.about.title": "2. Acerca de la Revista",
   "step.about.journalTitle": "Título de la revista",
   "step.about.alternativeTitle": "Título alternativo",
@@ -36,7 +33,6 @@
   "step.about.languagesHint": "Idiomas en los que la revista publica textos completos.",
   "step.about.publisherName": "Nombre del editor",
   "step.about.publisherCountry": "País del editor",
-
   "step.copyright.title": "3. Derechos de Autor y Licencias",
   "step.copyright.licensesUsed": "Licencias utilizadas por la revista",
   "step.copyright.licenseInfoUrl": "URL de información de licencia",
@@ -49,7 +45,6 @@
   "step.copyright.licenseConsistentOnArticlePages": "La licencia en las páginas individuales de artículos coincide con la política de licencia del sitio.",
   "step.copyright.licenseConsistentInPdfs": "El texto de licencia en los PDFs de artículos coincide con la política de licencia del sitio web.",
   "step.copyright.noCopyrightConflicts": "No hay conflictos de derechos de autor entre el sitio web, las páginas de artículos y los PDFs (por ej., no aparece 'Todos los derechos reservados' junto a una licencia abierta).",
-
   "step.editorial.title": "4. Proceso Editorial",
   "step.editorial.peerReviewTypes": "Tipos de revisión por pares",
   "step.editorial.peerReviewPolicyUrl": "URL de política de revisión por pares",
@@ -63,7 +58,6 @@
   "step.editorial.avgWeeks": "Semanas promedio desde envío hasta publicación",
   "step.editorial.endogenyCompliant": "La autoría interna no supera el 25% (editores/miembros del consejo no son autores de más del 25% de los artículos publicados).",
   "step.editorial.endogenyHint": "Regla DOAJ: cuente los últimos dos números (o el último año natural si la publicación es continua). Si algún autor de un artículo de investigación es también editor, miembro del consejo o revisor, ese artículo cuenta como interno. Máximo 25%.",
-
   "step.ethics.title": "5. Ética e Integridad en la Investigación",
   "step.ethics.description": "DOAJ exige que las revistas tengan políticas claras de integridad en la investigación. Las políticas éticas ausentes o vagas son una causa frecuente de rechazo.",
   "step.ethics.publicationEthicsUrl": "URL de declaración de ética / mala praxis editorial",
@@ -74,7 +68,6 @@
   "step.ethics.misleadingMetricsTitle": "Métricas no estándar — política DOAJ",
   "step.ethics.misleadingMetricsExplain": "DOAJ prohíbe mostrar métricas de registros comerciales no reconocidos por la comunidad académica, como: Global Impact Factor, SJIF, ResearchBib IF, Universal Impact Factor, CIF, i-Factor y similares. Estas no son métricas revisadas por pares e inducen a error a los autores. Solo muestre métricas verificables de servicios reconocidos: Web of Science JIF, Scopus CiteScore, SCImago SJR o SNIP.",
   "step.ethics.noMisleadingMetrics": "La revista NO muestra 'factores de impacto' no estándar o no verificables de registros comerciales no reconocidos.",
-
   "step.businessModel.title": "6. Modelo de Negocio",
   "step.businessModel.chargesApc": "La revista cobra cargos por procesamiento de artículos (APC).",
   "step.businessModel.apcFees": "Tarifas APC",
@@ -86,12 +79,10 @@
   "step.businessModel.apcInfoHint": "Las tarifas (o su ausencia) deben indicarse claramente y ser fáciles de encontrar en el sitio web.",
   "step.businessModel.providesWaiver": "La revista ofrece exenciones para autores que no pueden pagar.",
   "step.businessModel.chargesOtherFees": "La revista cobra otras tarifas (envío, publicación, etc.).",
-
   "step.bestPractice.title": "7. Buenas Prácticas",
   "step.bestPractice.archivingServices": "Servicios de archivo",
   "step.bestPractice.repositoryPolicies": "Políticas de repositorio / autoarchivo",
   "step.bestPractice.persistentIdentifiers": "Identificadores persistentes",
-
   "step.review.title": "8. Revisión y Envío",
   "step.review.description": "Revise la información a continuación y envíe para ejecutar la preevaluación de IA.",
   "step.review.openAccess": "Acceso Abierto",
@@ -127,12 +118,9 @@
   "step.review.apcInfoUrl": "URL info APC",
   "step.review.archiving": "Archivo",
   "step.review.pids": "IDs persistentes",
-
   "linkField.openLink": "Abrir enlace",
-
   "chipInput.placeholder": "Escriba y pulse Enter para añadir",
   "chipInput.remove": "Eliminar {{item}}",
-
   "report.noIssues": "No se encontraron problemas. La revista parece cumplir con los criterios de preevaluación DOAJ verificados aquí.",
   "report.itemsNeedAttention_one": "{{count}} elemento requiere atención",
   "report.itemsNeedAttention_other": "{{count}} elementos requieren atención",
@@ -142,20 +130,16 @@
   "report.copied": "✓ ¡Copiado!",
   "report.printSavePdf": "Imprimir / Guardar como PDF",
   "report.newAssessment": "Nueva evaluación",
-
   "summary.pass": "Probablemente lista para DOAJ",
   "summary.warning": "Requiere atención",
   "summary.fail": "Aún no está lista",
   "summary.checksInfo": "{{passCount}} verificaciones aprobadas · {{failCount}} problemas encontrados",
-
   "validation.required": "Este campo es obligatorio.",
   "validation.url": "Introduzca una URL válida que empiece por http(s)://.",
   "validation.issn": "Introduzca un ISSN válido con el formato 1234-5678.",
   "validation.issnRequired": "Se requiere al menos un ISSN (impreso o en línea).",
-
   "draft.restored": "Se restauró un borrador guardado. Su progreso se guarda automáticamente.",
   "draft.clear": "Borrar borrador",
-
   "progress.title": "Ejecutando la evaluación…",
   "progress.phase.starting": "Preparando la evaluación…",
   "progress.phase.scraping": "Visitando y leyendo las páginas proporcionadas…",
@@ -164,6 +148,37 @@
   "progress.phase.compiling": "Generando el informe…",
   "progress.elapsed": "{{seconds}} s transcurridos",
   "progress.note": "Esto suele tardar 1–2 minutos. Mantenga esta pestaña abierta.",
-
-  "report.disclaimer": "Esta herramienta no está afiliada con DOAJ. Un resultado positivo en la preevaluación no garantiza la aceptación en el proceso de revisión formal. El equipo editorial de DOAJ revisará su revista tras recibir la solicitud formal y tomará la decisión final siguiendo las directrices disponibles en <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>."
+  "report.disclaimer": "Esta herramienta no está afiliada con DOAJ. Un resultado positivo en la preevaluación no garantiza la aceptación en el proceso de revisión formal. El equipo editorial de DOAJ revisará su revista tras recibir la solicitud formal y tomará la decisión final siguiendo las directrices disponibles en <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>.",
+  "report.doajDisclaimer": "Esta herramienta no está afiliada a DOAJ. Un resultado positivo en la evaluación previa no garantiza la aceptación en el proceso de revisión formal. El equipo editorial de DOAJ revisará su revista tras recibir la solicitud formal y tomará la decisión final siguiendo las directrices disponibles en https://doaj.org/apply/guide/.",
+  "step.editorial.articleDatesDisplayed": "Las páginas de los artículos muestran las fechas de envío, aceptación y/o publicación.",
+  "step.editorial.articleDatesHint": "DOAJ recomienda encarecidamente mostrar al menos dos de estas tres fechas en cada página de artículo. Es una señal de transparencia revisada durante la evaluación.",
+  "step.businessModel.otherFeesInfoUrl": "URL de información sobre otras tarifas",
+  "step.businessModel.otherFeesInfoHint": "Página pública que enumera todas las demás tarifas para autores (tarifas de envío, cargos por página, impresión en color, etc.) y cuándo se aplican.",
+  "step.ethics.indexingClaimsVerifiable": "Todas las afirmaciones de indexación y clasificación en el sitio web de la revista son exactas y verificables en los sitios oficiales de esos servicios.",
+  "step.ethics.indexingClaimsHint": "Ejemplo: si la revista afirma estar indexada en Scopus o Web of Science, verifíquelo en scopus.com o webofscience.com. Las afirmaciones obsoletas o falsas son motivo de rechazo.",
+  "step.bestPractice.articlesHaveDois": "Los artículos publicados tienen DOI u otros identificadores persistentes.",
+  "step.bestPractice.doisHint": "DOAJ recomienda DOI para todos los artículos. Los DOI garantizan enlaces estables a largo plazo y son requeridos por la mayoría de los principales servicios de indexación.",
+  "step.review.indexingClaimsVerifiable": "Afirmaciones de indexación verificables",
+  "step.review.articleDatesDisplayed": "Fechas de artículo mostradas",
+  "step.review.otherFeesInfoUrl": "URL de otras tarifas",
+  "step.review.articlesHaveDois": "Los artículos tienen DOI",
+  "report.suggestionLabel": "Sugerencia:",
+  "report.showPassedChecks_one": "Mostrar {{count}} comprobación superada",
+  "report.showPassedChecks_other": "Mostrar {{count}} comprobaciones superadas",
+  "report.hidePassedChecks_one": "Ocultar {{count}} comprobación superada",
+  "report.hidePassedChecks_other": "Ocultar {{count}} comprobaciones superadas",
+  "step.openAccess.selectYear": "— Año —",
+  "step.openAccess.selectMonth": "— Mes (opcional) —",
+  "step.openAccess.approxOptional": "(aproximado, opcional)",
+  "report.confidenceHigh": "Confianza alta",
+  "report.confidenceMedium": "Confianza media",
+  "report.confidenceLow": "Confianza baja",
+  "report.viewCriteria": "Ver criterio de DOAJ",
+  "report.evidenceLabel": "Evidencia:",
+  "report.downloadHtml": "Descargar HTML",
+  "progress.sectionStatus.pending": "Pendiente",
+  "progress.sectionStatus.checking": "Comprobando…",
+  "progress.sectionStatus.pass": "Aprobado",
+  "progress.sectionStatus.warning": "Necesita atención",
+  "progress.sectionStatus.fail": "Fallido"
 }

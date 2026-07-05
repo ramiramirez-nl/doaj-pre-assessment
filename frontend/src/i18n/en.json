@@ -6,7 +6,6 @@
   "nav.next": "Next",
   "nav.submit": "Run Assessment",
   "nav.submitting": "Assessing…",
-
   "steps.openAccess": "Open Access",
   "steps.about": "About",
   "steps.copyright": "Copyright",
@@ -15,14 +14,12 @@
   "steps.businessModel": "Business Model",
   "steps.bestPractice": "Best Practice",
   "steps.review": "Review",
-
   "step.openAccess.title": "1. Open Access Compliance",
   "step.openAccess.adheresToDefinition": "The journal adheres to the DOAJ definition of open access.",
   "step.openAccess.hasNoEmbargo": "Articles are immediately open access upon publication (no embargo period).",
   "step.openAccess.statementUrl": "Open Access statement URL",
   "step.openAccess.statementHint": "Public page declaring the journal's open access policy.",
   "step.openAccess.licenseStartDate": "License start date",
-
   "step.about.title": "2. About the Journal",
   "step.about.journalTitle": "Journal title",
   "step.about.alternativeTitle": "Alternative title",
@@ -36,7 +33,6 @@
   "step.about.languagesHint": "Languages in which the journal publishes full texts.",
   "step.about.publisherName": "Publisher name",
   "step.about.publisherCountry": "Publisher country",
-
   "step.copyright.title": "3. Copyright & Licensing",
   "step.copyright.licensesUsed": "Licenses used by the journal",
   "step.copyright.licenseInfoUrl": "License info URL",
@@ -49,7 +45,6 @@
   "step.copyright.licenseConsistentOnArticlePages": "License on individual article pages matches the site-wide license policy.",
   "step.copyright.licenseConsistentInPdfs": "License text in article PDFs matches the website license policy.",
   "step.copyright.noCopyrightConflicts": "No copyright conflicts across the website, article pages, and PDFs (e.g. no 'All rights reserved' next to an open license).",
-
   "step.editorial.title": "4. Editorial Process",
   "step.editorial.peerReviewTypes": "Peer review types",
   "step.editorial.peerReviewPolicyUrl": "Peer review policy URL",
@@ -65,7 +60,6 @@
   "step.editorial.endogenyHint": "DOAJ rule: count the last two issues (or last calendar year if continuous publishing). If any author of a research article is also an editor, board member, or reviewer, that article counts as in-house. Maximum 25%.",
   "step.editorial.articleDatesDisplayed": "Article pages display submission, acceptance, and/or publication dates.",
   "step.editorial.articleDatesHint": "DOAJ strongly recommends showing at least two of these three dates on each article page. This is a transparency signal checked during evaluation.",
-
   "step.businessModel.title": "6. Business Model",
   "step.businessModel.chargesApc": "The journal charges article processing charges (APCs).",
   "step.businessModel.apcFees": "APC fees",
@@ -79,7 +73,6 @@
   "step.businessModel.chargesOtherFees": "The journal charges other fees (submission, publication, etc.).",
   "step.businessModel.otherFeesInfoUrl": "Other fees information URL",
   "step.businessModel.otherFeesInfoHint": "Public page listing all other author-facing fees (submission fees, page charges, colour printing, etc.) and when they apply.",
-
   "step.ethics.title": "5. Ethics & Research Integrity",
   "step.ethics.description": "DOAJ requires journals to have clear policies for research integrity. Missing or vague ethics policies are a frequent rejection reason.",
   "step.ethics.publicationEthicsUrl": "Publication ethics / malpractice statement URL",
@@ -92,14 +85,12 @@
   "step.ethics.misleadingMetricsTitle": "Non-standard metrics — DOAJ policy",
   "step.ethics.misleadingMetricsExplain": "DOAJ prohibits displaying metrics from commercial registries not recognised by the academic community, such as: Global Impact Factor, SJIF (Scientific Journal Impact Factor), ResearchBib IF, Universal Impact Factor, CIF, i-Factor, or similar. These are not peer-reviewed metrics and mislead authors. Only display verifiable metrics from recognised services: Web of Science Journal Impact Factor (JIF), Scopus CiteScore, SCImago SJR, or SNIP.",
   "step.ethics.noMisleadingMetrics": "The journal does NOT display non-standard or unverifiable 'impact factors' from unrecognised commercial registries.",
-
   "step.bestPractice.title": "7. Best Practice",
   "step.bestPractice.archivingServices": "Archiving services",
   "step.bestPractice.repositoryPolicies": "Repository / self-archiving policies",
   "step.bestPractice.persistentIdentifiers": "Persistent identifiers",
   "step.bestPractice.articlesHaveDois": "Published articles have DOIs or other persistent identifiers.",
   "step.bestPractice.doisHint": "DOAJ recommends DOIs for all articles. DOIs ensure stable long-term links and are required by most major indexing services.",
-
   "step.review.title": "8. Review & Submit",
   "step.review.description": "Review the information below, then submit to run the AI pre-assessment.",
   "step.review.openAccess": "Open Access",
@@ -139,14 +130,10 @@
   "step.review.licenseConsistentOnArticlePages": "License on article pages",
   "step.review.licenseConsistentInPdfs": "License in PDFs",
   "step.review.noCopyrightConflicts": "No copyright conflicts",
-
   "linkField.openLink": "Open Link",
-
   "report.doajDisclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at https://doaj.org/apply/guide/.",
-
   "chipInput.placeholder": "Type and press Enter to add",
   "chipInput.remove": "Remove {{item}}",
-
   "report.noIssues": "No issues found. The journal appears to meet the DOAJ pre-assessment criteria checked here.",
   "report.itemsNeedAttention_one": "{{count}} item needs attention",
   "report.itemsNeedAttention_other": "{{count}} items need attention",
@@ -156,20 +143,16 @@
   "report.copied": "✓ Copied!",
   "report.printSavePdf": "Print / Save as PDF",
   "report.newAssessment": "New Assessment",
-
   "summary.pass": "Likely DOAJ-ready",
   "summary.warning": "Needs attention",
   "summary.fail": "Not yet ready",
   "summary.checksInfo": "{{passCount}} checks passed · {{failCount}} issues found",
-
   "validation.required": "This field is required.",
   "validation.url": "Enter a valid URL starting with http(s)://.",
   "validation.issn": "Enter a valid ISSN in the format 1234-5678.",
   "validation.issnRequired": "At least one ISSN (print or online) is required.",
-
   "draft.restored": "A saved draft was restored. Your progress is saved automatically.",
   "draft.clear": "Clear draft",
-
   "progress.title": "Running assessment…",
   "progress.phase.starting": "Preparing the assessment…",
   "progress.phase.scraping": "Visiting and reading the pages you provided…",
@@ -178,6 +161,24 @@
   "progress.phase.compiling": "Compiling the report…",
   "progress.elapsed": "{{seconds}} s elapsed",
   "progress.note": "This usually takes 1–2 minutes. Please keep this tab open.",
-
-  "report.disclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>."
+  "report.disclaimer": "This tool is not affiliated with DOAJ. A positive outcome in the pre-assessment does not guarantee acceptance in the formal review process. DOAJ editorial team will review your journal after receiving the formal application and make the final decision following the guidelines provided at <a href=\"https://doaj.org/apply/guide/\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"underline font-medium\">https://doaj.org/apply/guide/</a>.",
+  "report.suggestionLabel": "Suggestion:",
+  "report.showPassedChecks_one": "Show {{count}} passed check",
+  "report.showPassedChecks_other": "Show {{count}} passed checks",
+  "report.hidePassedChecks_one": "Hide {{count}} passed check",
+  "report.hidePassedChecks_other": "Hide {{count}} passed checks",
+  "step.openAccess.selectYear": "— Year —",
+  "step.openAccess.selectMonth": "— Month (optional) —",
+  "step.openAccess.approxOptional": "(approximate, optional)",
+  "report.confidenceHigh": "High confidence",
+  "report.confidenceMedium": "Medium confidence",
+  "report.confidenceLow": "Low confidence",
+  "report.viewCriteria": "View DOAJ criteria",
+  "report.evidenceLabel": "Evidence:",
+  "report.downloadHtml": "Download HTML",
+  "progress.sectionStatus.pending": "Pending",
+  "progress.sectionStatus.checking": "Checking…",
+  "progress.sectionStatus.pass": "Passed",
+  "progress.sectionStatus.warning": "Needs attention",
+  "progress.sectionStatus.fail": "Failed"
 }

@@ -3,12 +3,12 @@ import { describe, it, expect, vi } from 'vitest';
 vi.mock('../../src/scraper/pageScraper', () => ({
   scrapeUrl: vi.fn(),
 }));
-vi.mock('../../src/ai/geminiClient', () => ({
+vi.mock('../../src/ai/aiClient', () => ({
   analyzePageContent: vi.fn(),
 }));
 
 import { scrapeUrl } from '../../src/scraper/pageScraper';
-import { analyzePageContent } from '../../src/ai/geminiClient';
+import { analyzePageContent } from '../../src/ai/aiClient';
 import { validateEditorial } from '../../src/validators/editorial';
 import type { EditorialData } from '../../src/types/formData';
 

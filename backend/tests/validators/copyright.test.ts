@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { validateCopyright } from '../../src/validators/copyright';
 import * as scraper from '../../src/scraper/pageScraper';
-import * as ai from '../../src/ai/geminiClient';
+import * as ai from '../../src/ai/aiClient';
 
 vi.mock('../../src/scraper/pageScraper');
-vi.mock('../../src/ai/geminiClient');
+vi.mock('../../src/ai/aiClient');
 
 describe('validateCopyright', () => {
   it('fails if no licenses are provided', async () => {

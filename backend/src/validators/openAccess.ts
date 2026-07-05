@@ -102,6 +102,8 @@ export async function validateOpenAccess(
         ? 'Verify manually that the page contains an explicit open access statement.'
         : 'Add an explicit open access statement to this page. It must state that content is immediately accessible for free under an open license.',
     url: data.openAccessStatementUrl,
+    confidence: analysis.skipped ? undefined : analysis.confidence,
+    evidence: analysis.skipped ? undefined : analysis.evidence,
   });
 
   return results;

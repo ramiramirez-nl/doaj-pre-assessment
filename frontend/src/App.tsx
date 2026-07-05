@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm, type FieldErrors, type FieldPath } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData, ReportResponse } from './types/form.types';
-import { submitAssessment } from './api/client';
+import { submitAssessmentStream } from './api/client';
 import { useMultiStepForm } from './hooks/useMultiStepForm';
 import { loadDraft, saveDraft, clearDraft } from './utils/draft';
 import { Stepper } from './components/Stepper';
 import { LanguageSelector } from './components/LanguageSelector';
-import { AssessmentProgress } from './components/AssessmentProgress';
+import { AssessmentProgress, type SectionStatus } from './components/AssessmentProgress';
 import { StepOpenAccess } from './components/steps/StepOpenAccess';
 import { StepAbout } from './components/steps/StepAbout';
 import { StepCopyright } from './components/steps/StepCopyright';
@@ -100,6 +100,12 @@ const DEFAULT_VALUES: FormData = {
   },
 };
 
+function worstStatus(items: { status: 'pass' | 'warning' | 'fail' }[]): SectionStatus {
+  if (items.some((i) => i.status === 'fail')) return 'fail';
+  if (items.some((i) => i.status === 'warning')) return 'warning';
+  return 'pass';
+}
+
 function fieldError(errors: FieldErrors<FormData>, path: string): boolean {
   let node: unknown = errors;
   for (const key of path.split('.')) {
@@ -121,6 +127,8 @@ function App() {
   const [report, setReport] = useState<ReportResponse | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [progressSections, setProgressSections] = useState<string[]>([]);
+  const [progressStatuses, setProgressStatuses] = useState<Record<string, SectionStatus>>({});
   const saveTimer = useRef<ReturnType<typeof setTimeout>>();
 
   // Persist the form as a draft (debounced) so a refresh never loses work.
@@ -143,8 +151,14 @@ function App() {
   const onSubmit = async (data: FormData) => {
     setSubmitting(true);
     setError(null);
+    setProgressSections([]);
+    setProgressStatuses({});
     try {
-      const result = await submitAssessment(data);
+      const result = await submitAssessmentStream(data, {
+        onStart: (event) => setProgressSections(event.sections),
+        onSection: (event) =>
+          setProgressStatuses((prev) => ({ ...prev, [event.section]: worstStatus(event.items) })),
+      });
       setReport(result);
       window.scrollTo({ top: 0 });
     } catch (e) {
@@ -225,7 +239,7 @@ function App() {
         {report ? (
           <ReportDashboard report={report} onReset={reset} onBack={goBackToReview} />
         ) : submitting ? (
-          <AssessmentProgress />
+          <AssessmentProgress sections={progressSections} statuses={progressStatuses} />
         ) : (
           <FormProvider {...methods}>
             {draftNotice && (
