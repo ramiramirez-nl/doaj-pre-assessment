@@ -27,6 +27,8 @@ const aboutSchema = z.object({
   homepageUrl: urlField,
   issnPrint: z.string().trim().max(20).default(''),
   issnOnline: z.string().trim().max(20).default(''),
+  publisherName: shortText,
+  publisherCountry: z.string().trim().max(100).default(''),
 });
 
 const copyrightSchema = z.object({
@@ -51,6 +53,16 @@ const editorialSchema = z.object({
   avgWeeksSubmissionToPublication: z.number().min(0).max(520).optional(),
   endogenyCompliant: triStateBool,
   articleDatesDisplayed: triStateBool,
+  // Empty number inputs serialize as null; treat that as "not declared".
+  boardMemberCount: z.number().int().min(0).max(1000).nullable().optional(),
+  boardMultipleInstitutions: triStateBool,
+  publishesSpecialIssues: triStateBool,
+  specialIssueEicResponsible: triStateBool,
+  specialIssueSameReview: triStateBool,
+  specialIssueLabelled: triStateBool,
+  guestEditorsVetted: triStateBool,
+  guestEditorPapersIndependent: triStateBool,
+  guestEditorPapersWithinLimit: triStateBool,
 });
 
 const ethicsSchema = z.object({
@@ -80,6 +92,7 @@ const bestPracticeSchema = z.object({
   repositoryPolicies: chipArray,
   persistentIdentifiers: chipArray,
   articlesHaveDois: z.boolean().default(false),
+  aiPolicyUrl: urlField,
 });
 
 export const assessRequestSchema = z.object({

@@ -32,12 +32,12 @@ export async function runAllValidations(
 ): Promise<ReportResponse> {
   const validators: Array<Promise<ReportItem[]>> = [
     validateOpenAccess(formData.openAccess, language),
-    validateAbout(formData.about),
+    validateAbout(formData.about, language),
     validateEditorial(formData.editorial, language),
     validateCopyright(formData.copyright, language),
     validateEthics(formData.ethics, language),
     validateBusinessModel(formData.businessModel),
-    validateBestPractice(formData.bestPractice),
+    validateBestPractice(formData.bestPractice, language),
   ];
 
   // Each validator is wrapped so its result is decorated and emitted the

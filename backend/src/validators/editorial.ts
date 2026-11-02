@@ -3,6 +3,7 @@ import { analyzePageContent } from '../ai/aiClient';
 import type { EditorialData } from '../types/formData';
 import type { ReportItem } from '../types/report';
 import { describeAccessFailure } from './shared';
+import { checkBoardComposition, checkSpecialIssues } from './boardAndSpecialIssues';
 
 async function checkUrl(
   url: string,
@@ -110,6 +111,7 @@ export async function validateEditorial(
     language
   );
   results.push(...boardResults);
+  results.push(...checkBoardComposition(data));
 
   // Check 4: Aims & Scope URL
   const aimsResults = await checkUrl(
@@ -172,6 +174,9 @@ export async function validateEditorial(
       suggestion: '',
     });
   }
+
+  // Check 8: Special issues (only if the journal publishes them)
+  results.push(...checkSpecialIssues(data));
 
   return results;
 }

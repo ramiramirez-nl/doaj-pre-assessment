@@ -34,6 +34,8 @@ export function StepReview() {
           <Row label={t('step.review.homepage')} value={data.about?.homepageUrl} />
           <Row label={t('step.review.issnOnline')} value={data.about?.issnOnline} />
           <Row label={t('step.review.issnPrint')} value={data.about?.issnPrint} />
+          <Row label={t('step.review.publisher')} value={data.about?.publisherName} />
+          <Row label={t('step.review.publisherCountry')} value={data.about?.publisherCountry} />
         </dl>
         <h3 className="mb-2 mt-4 font-semibold">{t('step.review.copyright')}</h3>
         <dl>
@@ -47,6 +49,11 @@ export function StepReview() {
         <dl>
           <Row label={t('step.review.peerReviewTypes')} value={data.editorial?.peerReviewTypes?.join(', ')} />
           <Row label={t('step.review.editorialBoardUrl')} value={data.editorial?.editorialBoardUrl} />
+          <Row
+            label={t('step.review.boardMemberCount')}
+            value={Number.isFinite(data.editorial?.boardMemberCount) ? String(data.editorial?.boardMemberCount) : ''}
+          />
+          <Row label={t('step.review.publishesSpecialIssues')} value={String(data.editorial?.publishesSpecialIssues)} />
           <Row label={t('step.review.aimsAndScopeUrl')} value={data.editorial?.aimsAndScopeUrl} />
           <Row label={t('step.review.endogenyCompliant')} value={String(data.editorial?.endogenyCompliant)} />
           <Row label={t('step.review.articleDatesDisplayed')} value={String(data.editorial?.articleDatesDisplayed)} />
@@ -70,6 +77,7 @@ export function StepReview() {
           <Row label={t('step.review.archiving')} value={data.bestPractice?.archivingServices?.join(', ')} />
           <Row label={t('step.review.pids')} value={data.bestPractice?.persistentIdentifiers?.join(', ')} />
           <Row label={t('step.review.articlesHaveDois')} value={String(data.bestPractice?.articlesHaveDois)} />
+          <Row label={t('step.review.aiPolicyUrl')} value={data.bestPractice?.aiPolicyUrl} />
         </dl>
       </div>
     </section>

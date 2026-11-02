@@ -15,6 +15,8 @@ export interface AboutData {
   homepageUrl: string;
   issnPrint: string;
   issnOnline: string;
+  publisherName?: string;
+  publisherCountry?: string;
 }
 
 export interface CopyrightData {
@@ -39,6 +41,15 @@ export interface EditorialData {
   avgWeeksSubmissionToPublication: number;
   endogenyCompliant: boolean;
   articleDatesDisplayed: boolean;
+  boardMemberCount?: number | null;
+  boardMultipleInstitutions?: boolean;
+  publishesSpecialIssues?: boolean;
+  specialIssueEicResponsible?: boolean;
+  specialIssueSameReview?: boolean;
+  specialIssueLabelled?: boolean;
+  guestEditorsVetted?: boolean;
+  guestEditorPapersIndependent?: boolean;
+  guestEditorPapersWithinLimit?: boolean;
 }
 
 export interface EthicsData {
@@ -63,6 +74,7 @@ export interface BestPracticeData {
   repositoryPolicies: string[];
   persistentIdentifiers: string[];
   articlesHaveDois: boolean;
+  aiPolicyUrl?: string;
 }
 
 export interface FormData {

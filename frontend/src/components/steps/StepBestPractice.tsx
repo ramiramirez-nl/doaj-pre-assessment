@@ -1,6 +1,8 @@
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import type { FormData } from '../../types/form.types';
+import { LinkField } from '../LinkField';
+import { URL_PATTERN } from '../../utils/validation';
 
 const ARCHIVING = ['CLOCKSS', 'LOCKSS', 'Portico', 'PMC', 'National Library', 'Internet Archive'];
 const REPOSITORY = ['Pre-print allowed', 'Post-print allowed', 'Published version allowed'];
@@ -48,7 +50,7 @@ function ChipGroup({
 }
 
 export function StepBestPractice() {
-  const { register, watch, setValue } = useFormContext<FormData>();
+  const { register, watch, setValue, formState: { errors } } = useFormContext<FormData>();
   const { t } = useTranslation();
   const archiving = watch('bestPractice.archivingServices') ?? [];
   const repos = watch('bestPractice.repositoryPolicies') ?? [];
@@ -80,6 +82,14 @@ export function StepBestPractice() {
         <span>{t('step.bestPractice.articlesHaveDois')}</span>
       </label>
       <p className="text-xs text-gray-500">{t('step.bestPractice.doisHint')}</p>
+      <LinkField
+        label={t('step.bestPractice.aiPolicyUrl')}
+        hint={t('step.bestPractice.aiPolicyHint')}
+        error={errors.bestPractice?.aiPolicyUrl?.message}
+        {...register('bestPractice.aiPolicyUrl', {
+          validate: (value) => !value || URL_PATTERN.test(value) || t('validation.url'),
+        })}
+      />
     </section>
   );
 }

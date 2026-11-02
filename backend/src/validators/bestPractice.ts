@@ -1,8 +1,65 @@
+import { scrapeUrl } from '../scraper/pageScraper';
+import { analyzePageContent } from '../ai/aiClient';
 import type { BestPracticeData } from '../types/formData';
 import type { ReportItem } from '../types/report';
+import { describeAccessFailure } from './shared';
+
+const AI_POLICY_SUGGESTION =
+  'DOAJ recommends a public policy on the use of AI and automated tools by authors, reviewers, and editors (e.g. disclosure requirements, whether reviewers may upload manuscripts to AI tools, and who is accountable for the content).';
+
+/**
+ * DOAJ Guide v2.9, "Best practices": a policy on AI and automated tools for
+ * authors, reviewers and editors. A "should" item, so it never fails.
+ */
+async function checkAiPolicy(url: string, language?: string): Promise<ReportItem> {
+  const base = { section: 'Best Practice', field: 'aiPolicyUrl' } as const;
+  if (!url) {
+    return {
+      ...base,
+      status: 'warning',
+      message: 'No policy on AI and automated tools declared.',
+      suggestion: AI_POLICY_SUGGESTION,
+    };
+  }
+  const scraped = await scrapeUrl(url);
+  if (!scraped.accessible) {
+    const failure = describeAccessFailure(url, scraped);
+    return { ...base, status: 'warning', message: failure.message, suggestion: failure.suggestion, url };
+  }
+  const analysis = await analyzePageContent({
+    pageText: scraped.text,
+    criteria:
+      'Does this page state a policy on the use of AI or automated tools (e.g. generative AI, large language models) in the journal, covering authors and ideally also reviewers and editors?',
+    url,
+    language,
+  });
+  if (analysis.found) {
+    return {
+      ...base,
+      status: 'pass',
+      message: `A policy on AI and automated tools was found at ${url}.`,
+      suggestion: '',
+      url,
+      confidence: analysis.confidence,
+      evidence: analysis.evidence,
+    };
+  }
+  return {
+    ...base,
+    status: 'warning',
+    message: analysis.skipped
+      ? `The page is accessible, but AI verification of its content could not run. ${analysis.evidence}`
+      : `No AI and automated tools policy found at ${url}. ${analysis.evidence}`,
+    suggestion: AI_POLICY_SUGGESTION,
+    url,
+    confidence: analysis.skipped ? undefined : analysis.confidence,
+    evidence: analysis.skipped ? undefined : analysis.evidence,
+  };
+}
 
 export async function validateBestPractice(
-  data: BestPracticeData
+  data: BestPracticeData,
+  language?: string
 ): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
 
@@ -85,6 +142,9 @@ export async function validateBestPractice(
       suggestion: '',
     });
   }
+
+  // Check: Policy on AI and automated tools (recommended)
+  results.push(await checkAiPolicy(data.aiPolicyUrl ?? '', language));
 
   return results;
 }

@@ -67,6 +67,21 @@ export function StepAbout() {
           <FieldError message={errors.about?.issnOnline?.message} />
         </div>
       </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">{t('step.about.publisherName')}</label>
+          <input className={inputCls} {...register('about.publisherName')} />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">{t('step.about.publisherCountry')}</label>
+          <input
+            className={inputCls}
+            {...register('about.publisherCountry', { required: t('validation.required') })}
+          />
+          <FieldError message={errors.about?.publisherCountry?.message} />
+        </div>
+      </div>
+      <p className="text-xs text-gray-500">{t('step.about.publisherCountryHint')}</p>
     </section>
   );
 }

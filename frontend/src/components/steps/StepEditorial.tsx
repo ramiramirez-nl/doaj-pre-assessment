@@ -13,6 +13,15 @@ const PEER_REVIEW_TYPES = [
   'Post-publication peer review',
 ];
 
+const SPECIAL_ISSUE_FIELDS = [
+  'specialIssueEicResponsible',
+  'specialIssueSameReview',
+  'specialIssueLabelled',
+  'guestEditorsVetted',
+  'guestEditorPapersIndependent',
+  'guestEditorPapersWithinLimit',
+] as const;
+
 const inputCls =
   'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm';
 
@@ -24,6 +33,7 @@ export function StepEditorial() {
     pattern: { value: URL_PATTERN, message: t('validation.url') },
   };
   const selected = watch('editorial.peerReviewTypes') ?? [];
+  const publishesSpecialIssues = watch('editorial.publishesSpecialIssues');
 
   const toggle = (type: string) => {
     const next = selected.includes(type) ? selected.filter((t) => t !== type) : [...selected, type];
@@ -89,6 +99,20 @@ export function StepEditorial() {
         error={errors.editorial?.editorialBoardUrl?.message}
         {...register('editorial.editorialBoardUrl', requiredUrlRules)}
       />
+      <div>
+        <label className="block text-sm font-medium text-gray-700">{t('step.editorial.boardMemberCount')}</label>
+        <input
+          type="number"
+          min={0}
+          className={inputCls}
+          {...register('editorial.boardMemberCount', { valueAsNumber: true })}
+        />
+        <p className="mt-1 text-xs text-gray-500">{t('step.editorial.boardMemberCountHint')}</p>
+      </div>
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('editorial.boardMultipleInstitutions')} />
+        <span>{t('step.editorial.boardMultipleInstitutions')}</span>
+      </label>
       <LinkField
         label={t('step.editorial.instructionsForAuthorsUrl')}
         error={errors.editorial?.instructionsForAuthorsUrl?.message}
@@ -113,6 +137,21 @@ export function StepEditorial() {
         <span>{t('step.editorial.articleDatesDisplayed')}</span>
       </label>
       <p className="text-xs text-gray-500">{t('step.editorial.articleDatesHint')}</p>
+      <label className="flex items-start gap-2 text-sm text-gray-700">
+        <input type="checkbox" className="mt-0.5" {...register('editorial.publishesSpecialIssues')} />
+        <span>{t('step.editorial.publishesSpecialIssues')}</span>
+      </label>
+      {publishesSpecialIssues && (
+        <fieldset className="space-y-3 rounded-md border border-gray-200 p-4">
+          <p className="text-xs text-gray-500">{t('step.editorial.specialIssuesHint')}</p>
+          {SPECIAL_ISSUE_FIELDS.map((field) => (
+            <label key={field} className="flex items-start gap-2 text-sm text-gray-700">
+              <input type="checkbox" className="mt-0.5" {...register(`editorial.${field}`)} />
+              <span>{t(`step.editorial.${field}`)}</span>
+            </label>
+          ))}
+        </fieldset>
+      )}
     </section>
   );
 }

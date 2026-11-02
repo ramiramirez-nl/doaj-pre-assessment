@@ -1,11 +1,83 @@
 import { scrapeUrl } from '../scraper/pageScraper';
 import { lookupIssn } from '../issn/issnClient';
+import { analyzePageContent } from '../ai/aiClient';
 import type { AboutData } from '../types/formData';
 import type { ReportItem } from '../types/report';
+import type { ScrapeResult } from '../scraper/pageScraper';
 import { describeAccessFailure } from './shared';
 
-export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
+/**
+ * DOAJ Guide v2.9, "Journal website": the country given in the application
+ * and on the website must be where the publisher is registered and carries
+ * out its business. Missing country is a fail; a homepage that does not show
+ * a matching address is a warning, because it may sit on another page.
+ */
+async function checkPublisherCountry(
+  data: AboutData,
+  homepage: ScrapeResult | null,
+  language?: string
+): Promise<ReportItem> {
+  const country = (data.publisherCountry ?? '').replace(/[^\p{L}\p{N} .,'()-]/gu, '').trim().slice(0, 100);
+  if (!country) {
+    return {
+      section: 'About',
+      field: 'publisherCountry',
+      status: 'fail',
+      message: 'No publisher country provided.',
+      suggestion:
+        'Give the country where the publisher is registered and carries out its business activities. It must match the publisher information on the journal website.',
+    };
+  }
+  const suggestion = `Show the publisher's name and full address (in ${country}) on the journal website, e.g. in the footer or on the About/Contact page. The country must be where the publisher is registered and operates.`;
+  if (!homepage?.accessible) {
+    return {
+      section: 'About',
+      field: 'publisherCountry',
+      status: 'warning',
+      message: `Publisher country "${country}" could not be checked against the website because the homepage was not reachable.`,
+      suggestion,
+    };
+  }
+  // Publisher addresses usually sit in the footer, so give the AI both ends
+  // of the page instead of only the first 3000 characters.
+  const text = homepage.text;
+  const pageText = text.length > 3000 ? `${text.slice(0, 1500)} … ${text.slice(-1500)}` : text;
+  const publisher = (data.publisherName ?? '').slice(0, 200);
+  const analysis = await analyzePageContent({
+    pageText,
+    criteria: `Does this page state the publisher${publisher ? ` ("${publisher}")` : ''} with an address or location in the country "${country}"? Answer found=true only if the stated publisher location is in that country.`,
+    url: data.homepageUrl,
+    language,
+  });
+  if (analysis.found) {
+    return {
+      section: 'About',
+      field: 'publisherCountry',
+      status: 'pass',
+      message: `The website shows publisher information located in ${country}.`,
+      suggestion: '',
+      url: data.homepageUrl,
+      confidence: analysis.confidence,
+      evidence: analysis.evidence,
+    };
+  }
+  return {
+    section: 'About',
+    field: 'publisherCountry',
+    status: 'warning',
+    message: analysis.skipped
+      ? `Publisher country "${country}" could not be verified: AI verification did not run. ${analysis.evidence}`
+      : `The homepage does not show a publisher address in ${country}. ${analysis.evidence}`,
+    suggestion,
+    url: data.homepageUrl,
+    confidence: analysis.skipped ? undefined : analysis.confidence,
+    evidence: analysis.skipped ? undefined : analysis.evidence,
+  };
+}
+
+export async function validateAbout(data: AboutData, language?: string): Promise<ReportItem[]> {
   const results: ReportItem[] = [];
+  let homepage: ScrapeResult | null = null;
 
   // Check 1: Homepage accessibility
   if (!data.homepageUrl) {
@@ -18,6 +90,7 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
     });
   } else {
     const scraped = await scrapeUrl(data.homepageUrl);
+    homepage = scraped;
     if (scraped.accessible) {
       results.push({
         section: 'About',
@@ -95,6 +168,9 @@ export async function validateAbout(data: AboutData): Promise<ReportItem[]> {
       });
     }
   }
+
+  // Check 4: Publisher country matches the website
+  results.push(await checkPublisherCountry(data, homepage, language));
 
   return results;
 }

@@ -32,7 +32,7 @@ const STEP_KEYS = [
 // Fields validated when leaving each step (and used to map errors to steps).
 const STEP_FIELDS: FieldPath<FormData>[][] = [
   ['openAccess.openAccessStatementUrl'],
-  ['about.journalTitle', 'about.homepageUrl', 'about.issnPrint', 'about.issnOnline'],
+  ['about.journalTitle', 'about.homepageUrl', 'about.issnPrint', 'about.issnOnline', 'about.publisherCountry'],
   ['copyright.licenseInfoUrl', 'copyright.copyrightTermsUrl'],
   [
     'editorial.peerReviewPolicyUrl',
@@ -43,7 +43,7 @@ const STEP_FIELDS: FieldPath<FormData>[][] = [
   ],
   [],
   ['businessModel.apcInfoUrl'],
-  [],
+  ['bestPractice.aiPolicyUrl'],
   [],
 ];
 
@@ -54,6 +54,8 @@ const DEFAULT_VALUES: FormData = {
     homepageUrl: '',
     issnPrint: '',
     issnOnline: '',
+    publisherName: '',
+    publisherCountry: '',
   },
   copyright: {
     licenses: [],
@@ -76,6 +78,15 @@ const DEFAULT_VALUES: FormData = {
     avgWeeksSubmissionToPublication: 0,
     endogenyCompliant: false,
     articleDatesDisplayed: false,
+    boardMemberCount: null,
+    boardMultipleInstitutions: false,
+    publishesSpecialIssues: false,
+    specialIssueEicResponsible: false,
+    specialIssueSameReview: false,
+    specialIssueLabelled: false,
+    guestEditorsVetted: false,
+    guestEditorPapersIndependent: false,
+    guestEditorPapersWithinLimit: false,
   },
   ethics: {
     publicationEthicsUrl: '',
@@ -97,6 +108,7 @@ const DEFAULT_VALUES: FormData = {
     repositoryPolicies: [],
     persistentIdentifiers: [],
     articlesHaveDois: false,
+    aiPolicyUrl: '',
   },
 };
 
