@@ -9,8 +9,9 @@ import { describeAccessFailure } from './shared';
 /**
  * DOAJ Guide v2.9, "Journal website": the country given in the application
  * and on the website must be where the publisher is registered and carries
- * out its business. Missing country is a fail; a homepage that does not show
- * a matching address is a warning, because it may sit on another page.
+ * out its business. Missing country is a fail. The contact page (or the
+ * homepage, if none is given) is checked for a matching address; no match is
+ * a warning, because the address may sit on yet another page.
  */
 async function checkPublisherCountry(
   data: AboutData,
@@ -28,25 +29,33 @@ async function checkPublisherCountry(
         'Give the country where the publisher is registered and carries out its business activities. It must match the publisher information on the journal website.',
     };
   }
-  const suggestion = `Show the publisher's name and full address (in ${country}) on the journal website, e.g. in the footer or on the About/Contact page. The country must be where the publisher is registered and operates.`;
-  if (!homepage?.accessible) {
+  const suggestion = `Show the publisher's name and full address (in ${country}) on the journal website, e.g. on the Contact page or in the footer. The country must be where the publisher is registered and operates.`;
+
+  // Prefer the contact page (where most journals put the postal address);
+  // fall back to the already-scraped homepage when none is given.
+  const contactUrl = (data.contactPageUrl ?? '').trim();
+  const source = contactUrl ? await scrapeUrl(contactUrl) : homepage;
+  const sourceUrl = contactUrl || data.homepageUrl;
+  const pageLabel = contactUrl ? 'contact page' : 'homepage';
+  if (!source?.accessible) {
     return {
       section: 'About',
       field: 'publisherCountry',
       status: 'warning',
-      message: `Publisher country "${country}" could not be checked against the website because the homepage was not reachable.`,
+      message: `Publisher country "${country}" could not be checked against the website because the ${pageLabel} was not reachable.`,
       suggestion,
+      url: sourceUrl || undefined,
     };
   }
-  // Publisher addresses usually sit in the footer, so give the AI both ends
-  // of the page instead of only the first 3000 characters.
-  const text = homepage.text;
+  // Addresses often sit in the footer, so give the AI both ends of the page
+  // instead of only the first 3000 characters.
+  const text = source.text;
   const pageText = text.length > 3000 ? `${text.slice(0, 1500)} … ${text.slice(-1500)}` : text;
   const publisher = (data.publisherName ?? '').slice(0, 200);
   const analysis = await analyzePageContent({
     pageText,
     criteria: `Does this page state the publisher${publisher ? ` ("${publisher}")` : ''} with an address or location in the country "${country}"? Answer found=true only if the stated publisher location is in that country.`,
-    url: data.homepageUrl,
+    url: sourceUrl,
     language,
   });
   if (analysis.found) {
@@ -56,7 +65,7 @@ async function checkPublisherCountry(
       status: 'pass',
       message: `The website shows publisher information located in ${country}.`,
       suggestion: '',
-      url: data.homepageUrl,
+      url: sourceUrl,
       confidence: analysis.confidence,
       evidence: analysis.evidence,
     };
@@ -67,9 +76,11 @@ async function checkPublisherCountry(
     status: 'warning',
     message: analysis.skipped
       ? `Publisher country "${country}" could not be verified: AI verification did not run. ${analysis.evidence}`
-      : `The homepage does not show a publisher address in ${country}. ${analysis.evidence}`,
-    suggestion,
-    url: data.homepageUrl,
+      : `The ${pageLabel} does not show a publisher address in ${country}. ${analysis.evidence}`,
+    suggestion: contactUrl
+      ? suggestion
+      : `${suggestion} If the address is on a contact page, add its URL in the form so it can be checked.`,
+    url: sourceUrl,
     confidence: analysis.skipped ? undefined : analysis.confidence,
     evidence: analysis.skipped ? undefined : analysis.evidence,
   };

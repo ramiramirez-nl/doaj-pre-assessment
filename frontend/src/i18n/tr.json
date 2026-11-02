@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "Yayıncı ülkesi",
   "step.review.boardMemberCount": "Kurul üyeleri",
   "step.review.publishesSpecialIssues": "Özel sayılar",
-  "step.review.aiPolicyUrl": "Yapay zekâ politikası URL'si"
+  "step.review.aiPolicyUrl": "Yapay zekâ politikası URL'si",
+  "step.about.contactPageUrl": "İletişim sayfası URL'si",
+  "step.about.contactPageHint": "Yayıncının posta adresini gösteren sayfa. Yayıncı ülkesini kontrol etmek için kullanılır; boş bırakılırsa ana sayfa kontrol edilir.",
+  "step.review.contactPageUrl": "İletişim sayfası"
 }

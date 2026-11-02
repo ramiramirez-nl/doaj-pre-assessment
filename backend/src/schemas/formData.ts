@@ -29,6 +29,7 @@ const aboutSchema = z.object({
   issnOnline: z.string().trim().max(20).default(''),
   publisherName: shortText,
   publisherCountry: z.string().trim().max(100).default(''),
+  contactPageUrl: urlField,
 });
 
 const copyrightSchema = z.object({

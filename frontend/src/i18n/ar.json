@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "دولة الناشر",
   "step.review.boardMemberCount": "أعضاء الهيئة",
   "step.review.publishesSpecialIssues": "الأعداد الخاصة",
-  "step.review.aiPolicyUrl": "رابط سياسة الذكاء الاصطناعي"
+  "step.review.aiPolicyUrl": "رابط سياسة الذكاء الاصطناعي",
+  "step.about.contactPageUrl": "رابط صفحة الاتصال",
+  "step.about.contactPageHint": "الصفحة التي تعرض العنوان البريدي للناشر. تُستخدم للتحقق من دولة الناشر؛ وإذا تُرك الحقل فارغًا تُفحص الصفحة الرئيسية.",
+  "step.review.contactPageUrl": "صفحة الاتصال"
 }

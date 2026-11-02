@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "Pays de l'éditeur",
   "step.review.boardMemberCount": "Membres du comité",
   "step.review.publishesSpecialIssues": "Numéros spéciaux",
-  "step.review.aiPolicyUrl": "URL de la politique IA"
+  "step.review.aiPolicyUrl": "URL de la politique IA",
+  "step.about.contactPageUrl": "URL de la page de contact",
+  "step.about.contactPageHint": "Page indiquant l'adresse postale de l'éditeur. Sert à vérifier le pays de l'éditeur ; si le champ est vide, la page d'accueil est vérifiée.",
+  "step.review.contactPageUrl": "Page de contact"
 }

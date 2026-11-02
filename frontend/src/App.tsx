@@ -32,7 +32,7 @@ const STEP_KEYS = [
 // Fields validated when leaving each step (and used to map errors to steps).
 const STEP_FIELDS: FieldPath<FormData>[][] = [
   ['openAccess.openAccessStatementUrl'],
-  ['about.journalTitle', 'about.homepageUrl', 'about.issnPrint', 'about.issnOnline', 'about.publisherCountry'],
+  ['about.journalTitle', 'about.homepageUrl', 'about.issnPrint', 'about.issnOnline', 'about.publisherCountry', 'about.contactPageUrl'],
   ['copyright.licenseInfoUrl', 'copyright.copyrightTermsUrl'],
   [
     'editorial.peerReviewPolicyUrl',
@@ -56,6 +56,7 @@ const DEFAULT_VALUES: FormData = {
     issnOnline: '',
     publisherName: '',
     publisherCountry: '',
+    contactPageUrl: '',
   },
   copyright: {
     licenses: [],

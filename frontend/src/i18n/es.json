@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "País de la editorial",
   "step.review.boardMemberCount": "Miembros del comité",
   "step.review.publishesSpecialIssues": "Números especiales",
-  "step.review.aiPolicyUrl": "URL de la política de IA"
+  "step.review.aiPolicyUrl": "URL de la política de IA",
+  "step.about.contactPageUrl": "URL de la página de contacto",
+  "step.about.contactPageHint": "Página con la dirección postal de la editorial. Se usa para comprobar el país de la editorial; si se deja vacía, se revisa la página de inicio.",
+  "step.review.contactPageUrl": "Página de contacto"
 }

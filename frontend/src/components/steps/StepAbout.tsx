@@ -82,6 +82,14 @@ export function StepAbout() {
         </div>
       </div>
       <p className="text-xs text-gray-500">{t('step.about.publisherCountryHint')}</p>
+      <LinkField
+        label={t('step.about.contactPageUrl')}
+        hint={t('step.about.contactPageHint')}
+        error={errors.about?.contactPageUrl?.message}
+        {...register('about.contactPageUrl', {
+          validate: (value) => !value || URL_PATTERN.test(value) || t('validation.url'),
+        })}
+      />
     </section>
   );
 }

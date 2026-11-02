@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "Land des Verlags",
   "step.review.boardMemberCount": "Board-Mitglieder",
   "step.review.publishesSpecialIssues": "Sonderausgaben",
-  "step.review.aiPolicyUrl": "URL der KI-Richtlinie"
+  "step.review.aiPolicyUrl": "URL der KI-Richtlinie",
+  "step.about.contactPageUrl": "URL der Kontaktseite",
+  "step.about.contactPageHint": "Seite mit der Postanschrift des Verlags. Dient zur Prüfung des Verlagslandes; bleibt das Feld leer, wird die Startseite geprüft.",
+  "step.review.contactPageUrl": "Kontaktseite"
 }

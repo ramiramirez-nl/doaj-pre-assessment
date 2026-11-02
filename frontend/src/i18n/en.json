@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "Publisher country",
   "step.review.boardMemberCount": "Board members",
   "step.review.publishesSpecialIssues": "Special issues",
-  "step.review.aiPolicyUrl": "AI policy URL"
+  "step.review.aiPolicyUrl": "AI policy URL",
+  "step.about.contactPageUrl": "Contact page URL",
+  "step.about.contactPageHint": "Page showing the publisher's postal address. Used to check the publisher country; if empty, the homepage is checked.",
+  "step.review.contactPageUrl": "Contact page"
 }

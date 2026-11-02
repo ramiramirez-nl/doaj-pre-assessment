@@ -127,5 +127,30 @@ describe('validateAbout', () => {
       expect(results.find((r) => r.field === 'publisherCountry')?.status).toBe('warning');
       expect(analyzePageContent).not.toHaveBeenCalled();
     });
-  });
+  
+    it('checks the contact page instead of the homepage when one is given', async () => {
+      (scrapeUrl as any).mockImplementation(async (url: string) => ({
+        accessible: true,
+        text: url.endsWith('/contact') ? 'Test Publisher, Ankara, Turkey' : 'Home',
+        links: [],
+        statusCode: 200,
+      }));
+      const results = await validateAbout({ ...base, contactPageUrl: 'https://example.com/contact' });
+      const item = results.find((r) => r.field === 'publisherCountry');
+      expect(item?.status).toBe('pass');
+      expect(item?.url).toBe('https://example.com/contact');
+      expect((analyzePageContent as any).mock.calls.at(-1)[0].pageText).toContain('Ankara');
+    });
+
+    it('warns when the contact page is unreachable', async () => {
+      (scrapeUrl as any).mockImplementation(async (url: string) =>
+        url.endsWith('/contact')
+          ? { accessible: false, text: '', links: [], statusCode: 404, errorType: 'http' }
+          : { accessible: true, text: 'Home', links: [], statusCode: 200 });
+      const results = await validateAbout({ ...base, contactPageUrl: 'https://example.com/contact' });
+      const item = results.find((r) => r.field === 'publisherCountry');
+      expect(item?.status).toBe('warning');
+      expect(item?.message).toContain('contact page');
+    });
+});
 });

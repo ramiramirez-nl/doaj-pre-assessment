@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "Negara penerbit",
   "step.review.boardMemberCount": "Anggota dewan",
   "step.review.publishesSpecialIssues": "Edisi khusus",
-  "step.review.aiPolicyUrl": "URL kebijakan AI"
+  "step.review.aiPolicyUrl": "URL kebijakan AI",
+  "step.about.contactPageUrl": "URL halaman kontak",
+  "step.about.contactPageHint": "Halaman yang menampilkan alamat pos penerbit. Digunakan untuk memeriksa negara penerbit; jika kosong, halaman beranda yang diperiksa.",
+  "step.review.contactPageUrl": "Halaman kontak"
 }

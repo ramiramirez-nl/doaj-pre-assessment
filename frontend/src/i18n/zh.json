@@ -198,5 +198,8 @@
   "step.review.publisherCountry": "出版者国家",
   "step.review.boardMemberCount": "编委人数",
   "step.review.publishesSpecialIssues": "特刊",
-  "step.review.aiPolicyUrl": "人工智能政策 URL"
+  "step.review.aiPolicyUrl": "人工智能政策 URL",
+  "step.about.contactPageUrl": "联系页面 URL",
+  "step.about.contactPageHint": "显示出版者邮寄地址的页面。用于核对出版者国家；如留空，则检查首页。",
+  "step.review.contactPageUrl": "联系页面"
 }

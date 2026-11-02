@@ -17,6 +17,7 @@ export interface AboutData {
   issnOnline: string;
   publisherName?: string;
   publisherCountry?: string;
+  contactPageUrl?: string;
 }
 
 export interface CopyrightData {
