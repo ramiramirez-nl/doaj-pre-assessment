@@ -128,7 +128,7 @@ Create `backend/.env` (never commit this file):
 ```env
 OPENAI_API_KEY=your-api-key       # required for AI content checks
 OPENAI_BASE_URL=https://api.deepseek.com/v1
-AI_MODEL=deepseek-flash
+AI_MODEL=deepseek-v4-flash
 PORT=3001
 NODE_ENV=development
 ```
@@ -136,8 +136,8 @@ NODE_ENV=development
 | Variable | Default | Purpose |
 | -------- | ------- | ------- |
 | `OPENAI_API_KEY` | none | API key for the AI provider |
-| `OPENAI_BASE_URL` | `https://api.freemodel.dev/v1` | Any OpenAI-compatible endpoint |
-| `AI_MODEL` | `gpt-4o-mini` | Model name at that endpoint |
+| `OPENAI_BASE_URL` | `https://api.deepseek.com/v1` | Any OpenAI-compatible endpoint |
+| `AI_MODEL` | `deepseek-v4-flash` | Model name at that endpoint |
 | `PORT` | `3001` | Backend port |
 
 Without `OPENAI_API_KEY` the tool still runs. AI content analysis is skipped and reported as a

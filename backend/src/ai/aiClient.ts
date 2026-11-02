@@ -5,20 +5,20 @@ import { TtlCache } from '../utils/ttlCache';
 
 /**
  * AI client. OpenAI-compatible REST API.
- * Defaults to freemodel.dev free models, but works with any OpenAI-compatible
+ * Defaults to DeepSeek (deepseek-v4-flash), but works with any OpenAI-compatible
  * endpoint (set OPENAI_BASE_URL + OPENAI_API_KEY).
  *
  * Env vars:
  *  - OPENAI_API_KEY   (required)
- *  - OPENAI_BASE_URL  (default https://api.freemodel.dev/v1)
- *  - AI_MODEL         (default gpt-4o-mini)
+ *  - OPENAI_BASE_URL  (default https://api.deepseek.com/v1)
+ *  - AI_MODEL         (default deepseek-v4-flash)
  *
  * Legacy fallback: GEMINI_API_KEY still read so existing deployments keep working
  * (treated as OPENAI_API_KEY if OPENAI_API_KEY missing).
  */
 
-const BASE_URL = process.env.OPENAI_BASE_URL ?? 'https://api.freemodel.dev/v1';
-const MODEL = process.env.AI_MODEL ?? 'gpt-4o-mini';
+const BASE_URL = process.env.OPENAI_BASE_URL ?? 'https://api.deepseek.com/v1';
+const MODEL = process.env.AI_MODEL ?? 'deepseek-v4-flash';
 const API_KEY = process.env.OPENAI_API_KEY ?? process.env.GEMINI_API_KEY ?? '';
 
 export interface AnalysisInput {

@@ -24,7 +24,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Backend
 - **Express.js** with TypeScript
-- **OpenAI-compatible chat completions API** (default: freemodel.dev, model `gpt-4o-mini`) for content analysis and verification
+- **OpenAI-compatible chat completions API** (default: DeepSeek, model `deepseek-v4-flash`) for content analysis and verification
 - **Zod** for request body validation
 - **Cheerio** for HTML parsing
 - **Axios** for HTTP requests (replaced Puppeteer—Render free tier can't run headless Chrome)
@@ -118,8 +118,8 @@ Backend requires:
 ```bash
 # backend/.env (not in git)
 OPENAI_API_KEY=sk-...
-OPENAI_BASE_URL=https://api.freemodel.dev/v1
-AI_MODEL=gpt-4o-mini
+OPENAI_BASE_URL=https://api.deepseek.com/v1
+AI_MODEL=deepseek-v4-flash
 PORT=3001
 NODE_ENV=development
 ```
